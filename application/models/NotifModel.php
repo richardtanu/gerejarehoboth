@@ -13,21 +13,15 @@ Class NotifModel extends CI_Model
 		return $DB1->insert_id();
 	}
 	public function notif_count(){
+
 		$DB1 = $this->load->database('testdb', TRUE);
 		$DB1->where('read_status', '0');
 		$DB1->from('notifikasi');
 		return $DB1->count_all_results();
 	}
-	// public function update_notif_count($where, $){
-	// 	$DB1 = $this->load->database('testdb', TRUE);
-	// 	$DB1->select("*");
-	// 	//something here
-	// 	$DB1->where('id_notifikasi', $where);
-	// 	$DB1->upda
-	// }
+
 	public function add_user_notification($datas){
 
-		//SOMETHING HERE!!!
 		$DB1 = $this->load->database('testdb', TRUE);
 		// $DB1->trans_start();
 		// $DB1->set('id_user', $datas['iduser']);
@@ -38,6 +32,80 @@ Class NotifModel extends CI_Model
 		// $DB1->trans_complete();
 		
 
+	}
+
+	public function update_notif_seen_by_user(){
+
+		$DB1 = $this->load->database('testdb', TRUE);
+		// $new = array('read_status' => 1);
+
+		
+		$DB1->set('read_status', 1, FALSE);
+		$DB1->where('read_status', 0);
+		$DB1->update('notifikasi');
+
+	}	
+
+	public function get_notif(){
+		// Query
+		// SELECT event.event_name, event.start_at, event.end_at, users.nama, notifikasi.message, notifikasi.created_at, notifikasi.read_status 
+		// FROM `user_notifikasi`
+		// JOIN event ON event.id_event = user_notifikasi.id_event 
+		// JOIN users ON  users.id_user = user_notifikasi.id_user 
+		// JOIN notifikasi ON notifikasi.id_notifikasi = user_notifikasi.id_notifikasi
+		// WHERE notifikasi.read_status = 0;
+
+		$DB1 = $this->load->database('testdb', TRUE);
+
+		$DB1->select("event.event_name, event.start_at, event.end_at, users.nama, notifikasi.message, notifikasi.created_at, notifikasi.read_status");
+		$DB1->from('user_notifikasi');
+		$DB1->join('event', 'event.id_event = user_notifikasi.id_event');
+		$DB1->join('users', 'users.id_user = user_notifikasi.id_user');
+		$DB1->join('notifikasi', 'notifikasi.id_notifikasi = user_notifikasi.id_notifikasi');
+		// $DB1->where('notifikasi.read_status', 0);
+		$DB1->order_by('created_at', 'DESC');
+
+		$query = $DB1->get();
+		// $test = $query->result();
+		$returns = array('result' => $query->result(),
+						'length' => $query->num_rows()
+					);
+		
+		if ( $query->num_rows() > 0) {
+			// echo "<script>alert('yeay');</script>";
+			// echo "<script>console.log('yeay');</script>";
+			return $returns;
+		}else{
+			return false;
+		}
+	}
+
+	public function get_count_notif_not_read_yet(){
+		// Query
+		// SELECT event.event_name, event.start_at, event.end_at, users.nama, notifikasi.message, notifikasi.created_at, notifikasi.read_status 
+		// FROM `user_notifikasi`
+		// JOIN event ON event.id_event = user_notifikasi.id_event 
+		// JOIN users ON  users.id_user = user_notifikasi.id_user 
+		// JOIN notifikasi ON notifikasi.id_notifikasi = user_notifikasi.id_notifikasi
+		// WHERE notifikasi.read_status = 0;
+
+		$DB1 = $this->load->database('testdb', TRUE);
+
+		$DB1->select("event.event_name, event.start_at, event.end_at, users.nama, notifikasi.message, notifikasi.created_at, notifikasi.read_status");
+		$DB1->from('user_notifikasi');
+		$DB1->join('event', 'event.id_event = user_notifikasi.id_event');
+		$DB1->join('users', 'users.id_user = user_notifikasi.id_user');
+		$DB1->join('notifikasi', 'notifikasi.id_notifikasi = user_notifikasi.id_notifikasi');
+		$DB1->where('notifikasi.read_status', 0);
+		$DB1->order_by('created_at', 'DESC');
+
+		$query = $DB1->get();
+		
+		if ($query->num_rows() > 0) {
+			return $query->num_rows();
+		}else{
+			return false;
+		}
 	}
 
 }

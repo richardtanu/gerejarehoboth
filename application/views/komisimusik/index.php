@@ -13,21 +13,6 @@
     <link href="<?php echo base_url();?>assets/admin/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="<?php echo base_url();?>assets/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    
-    <!-- iCheck -->
-    <!-- <link href="<?php echo base_url();?>assets/admin/iCheck/skins/flat/blue.css" rel="stylesheet"> -->
-    <link href="<?php echo base_url();?>assets/admin/iCheck/skins/all.css" rel="stylesheet">
-    <link href="<?php echo base_url();?>assets/admin/jquery_timepicker/jquery-ui-timepicker-addon.css" rel="stylesheet">
-    <link href="<?php echo base_url();?>assets/admin/jquery-ui/jquery-ui.css" rel="stylesheet">
-
-    <!-- bootstrap-wysiwyg -->
-    <link href="<?php echo base_url();?>assets/admin/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
-    <!-- Select2 -->
-    <link href="<?php echo base_url();?>assets/admin/select2/dist/css/select2.min.css" rel="stylesheet">
-    <!-- Switchery -->
-    <link href="<?php echo base_url();?>assets/admin/switchery/dist/switchery.min.css" rel="stylesheet">
-    <!-- starrr -->
-    <link href="<?php echo base_url();?>assets/admin/starrr/dist/starrr.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="<?php echo base_url();?>assets/admin/production/css/custom.min.css" rel="stylesheet">
 
@@ -73,90 +58,47 @@
           </div>
         </div>
 
-        <!-- top navigation -->
+        <!-- TOP RIGHT NAV BAR FROM -->
+        <!-- THIS PART IS RTL !!!!! -->
         <div class="top_nav">
           <div class="nav_menu">
             <nav class="" role="navigation">
-              <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-              </div>
-
               <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">John Doe
+                <li>
+                  <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="images/img.jpg" alt="">
+                    <?php $var = $this->session->userdata('loggedIn'); 
+                          echo $var['username']." ";
+                    ?>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
                     <li>
-                      <a href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
-                      </a>
+                      <a href=""> Profile</a>
                     </li>
-                    <li><a href="javascript:;">Help</a></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li>
+                      <a href="<?php echo base_url('Login/logout');?>">
+                        <i class="fa fa-sign-out pull-right">
+                      </i> Log Out</a>
+                    </li>
                   </ul>
                 </li>
-
-                <li role="presentation" class="dropdown">
-                  <a href="#" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                <!-- NOTIF GOES HERE -->
+                <li id="li_notif" role="presentation" class="dropdown">
+                  <a id="click_me_please" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green" id="new_count_message">
-                      <?php $DB1 = $this->load->database('testdb', TRUE);
-                            echo $DB1->where('read_status',0)->count_all_results('notifikasi');?>
-                    </span>
+                    <span id="count_message" class="badge bg-green" >0</span>
                   </a>  
-                  <!-- notif message looping -->
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+
+                  <ul class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
-                      <a>
-                        <span>
-                          <span>Ini harusnya pake pagination</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
+                        <!-- news feed goes here -->
+                       <ul id="news_feed">
+                         
+                       </ul>
                     </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
+              
+                    <!-- pagination page link down here -->
                     <li>
                       <div class="text-center">
                         <a>
@@ -165,6 +107,8 @@
                         </a>
                       </div>
                     </li>
+                    <!-- pagination page link down here -->
+
                   </ul>
                 </li>
               </ul>
@@ -214,7 +158,9 @@
       </div>
     </div>
 
-  
+    <!-- TODO
+    Buat insert pelayan sesuai komisi
+     -->
 
     <!-- jQuery -->
     <script src="<?php echo base_url();?>assets/admin/jquery/dist/jquery.min.js"></script>
@@ -228,12 +174,8 @@
     <script src="<?php echo base_url();?>assets/admin/production/js/moment/moment.min.js"></script>
     <!-- Custom Theme Scripts -->
     <!-- <script src="<?php echo base_url();?>assets/admin/production/js/custom.min.js"></script> -->
-  
-
     <!-- bootstrap-progressbar -->
     <script src="<?php echo base_url();?>assets/admin/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-    <!-- iCheck -->
-    <script src="<?php echo base_url();?>assets/admin/iCheck/icheck.js"></script>
     <!-- bootstrap-daterangepicker -->
     <script src="<?php echo base_url();?>assets/admin/js/datepicker/daterangepicker.js"></script>
     <script src="<?php echo base_url();?>assets/admin/starrr/dist/starrr.js"></script>
@@ -241,96 +183,58 @@
     </script>
     <script>
     $(document).ready(function(){
-
-      $('#submit_event').click( function() {
-
-        // e.preventDefault();
-        // var ckbox = new Array();
-        // $("input:checked").each(function() {
-        //    ckbox['komisi[]'].push($(this).val());
-        // });
-        // var check =  $("#event_description").val();
-        // alert(check);
-        var eventName = $("#event_name").val();
-        var date = $("#event_date").val();
-        var start =  $("#event_time_start").val();
-        var end = $("#event_time_end").val();
-        var desc = $("#event_description").val();
-
-        // var sentData = {
-        //   'name' : $("#event_name").val(),
-        //   'date' : $("#event_date").val(),
-        //   'start' : $("#event_time_start").val(),
-        //   'end' : $("#event_time_end").val(),
-        //   'desc' : $("#event_description").val(),
-        // };
-        // // var dataString = {
-        //   var  eventName = $("#event_name").val();
-        //   var  eventDate = $("#event_date").val();
-        //   var  start = $("#event_time_start").val();
-        //   var end = $("#event_time_end").val();
-        //   var  eventDescription = $("#event_description").val();
-            // check : ckbox
-          // };
-
-        $.ajax({
-          type: "POST",
-          url: "<?php echo base_url('admin/add_events');?>",
-          data: {
-            event_name : eventName,
-            event_date : date,
-            event_time_start : start,
-            event_time_end : end,
-            event_description : desc,
-            
-          },
-          dataType: "json",
-          // contentType: "application/json; charset=utf-8",
-          success: function(data){
      
-              if(data.success == true){
-                $('#confirmation_success').modal('show');
-
-                var StartEnd = start +"-"+ end;
-                // $('#notif').html(data.notif);
-                $(".modal-body .modal_table .modal_event_name #modal_event_name").html(eventName);
-                $(".modal-body .modal_table .modal_event_date #modal_event_date").html(date);
-                $(".modal-body .modal_table .modal_start_end #modal_start_end").html(StartEnd);
-
-                $("#event_name").val('');
-                $("#event_date").val('');
-                $("#event_time_start").val('');
-                $("#event_time_end").val('');
-                $("#event_description").val('');
-
-                
-                var socket = io.connect( 'http://'+window.location.hostname+':3000' );
-                socket.emit('new_notif', { 
-                  user: data.user_who_created,
-                  the_notif: data.notification,
-                  created_at: data.created_at,
-                  id_event: data.id_event,
-                  count_notif: data.count_notif
-                });
-
-              } else if (data.success == false) {
-
-                $('#notif').html(data.notif);
-                //  alert("totaly fail!");
-
-              }
-          } ,error: function(xhr, status, error) {
-            console.log(error);
-          }
-        });
-        // return false;
+     function load_unseen_notification(view = '')
+     {
+      $.ajax({
+       url:"<?php echo base_url('KomisiMusik/news_feed');?>",
+       method:"POST",
+       data:{view:view},
+       dataType:"json",
+       success:function(data)
+       {
+        $(' #news_feed').html(data.notification);
+        if(data.unseen_notification > 0)
+        {
+         $('#li_notif .dropdown-toggle #count_message').html(data.unseen_notification);
+        }
+       }
       });
-      // return false;
-    });
-    var socket = io.connect( 'http://'+window.location.hostname+':3000' );
-    socket.on("new_notif", function( data ) {
-      $( "#new_count_message" ).html( data.count_notif );
-
+     }
+     
+     load_unseen_notification();
+     
+     // $('#comment_form').on('submit', function(event){
+     //  event.preventDefault();
+     //  if($('#subject').val() != '' && $('#comment').val() != '')
+     //  {
+     //   var form_data = $(this).serialize();
+     //   $.ajax({
+     //    url:"insert.php",
+     //    method:"POST",
+     //    data:form_data,
+     //    success:function(data)
+     //    {
+     //     $('#comment_form')[0].reset();
+     //     load_unseen_notification();
+     //    }
+     //   });
+     //  }
+     //  else
+     //  {
+     //   alert("Both Fields are Required");
+     //  }
+     // });
+     
+     $(document).on('click', '#click_me_please', function(){
+      $('#count_message').html('0');
+      load_unseen_notification('yes');
+     });
+     
+     setInterval(function(){ 
+      load_unseen_notification(); 
+     }, 5000);
+     
     });
     </script>
   </body>
