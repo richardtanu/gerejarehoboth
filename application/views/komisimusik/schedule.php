@@ -123,7 +123,7 @@
             
             <div class="page-title">
               <div class="title_left">
-                <h3>What's going on?!</h3>
+                <h3>Schedule</h3>
               </div>
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
@@ -140,11 +140,53 @@
             <div class="clearfix"></div>
 
             <div class="row">
-             <!--  <?php echo "get created event";
-                foreach ($result as $key) {
-                  echo $key->event_name;
-                }
-              ?> -->
+              <div class="col-md-12">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Event Name</th>
+                      <th>Date</th>
+                      <th>Start</th>
+                      <th>End</th>
+                      <th>Action</th>
+                      <!-- <th>Del</th> -->
+                    </tr>
+                  </thead>
+
+                  <?php 
+                  foreach ($get_events as $key) {
+                    echo "<tr>";
+                    echo "<th scope='row'>".$key->id_event."</th>";
+                    echo "<td>".$key->event_name."</td>";
+                    $temp = $key->start_at;
+                    $date = substr($temp, 0, 10);
+                    echo "<td>".$date."</td>";
+                    $temp = $key->start_at;
+                    $start = substr($temp, 11, 8);
+                    echo "<td>".$start."</td>";
+                    $temp = $key->end_at;
+                    $end = substr($temp, 11, 8);
+                    echo "<td>".$end."</td>";
+                    echo "<td>";
+                    echo "<form method='post' action='".base_url()."komisimusik/add_volunter_to_schedule/".$key->id_event."'>";
+                    echo "<input type='submit' clas='btn btn-default' value='Add Volunter'/>";
+                    echo "</form>";
+                    echo "</td>";
+                    echo "</tr>";
+                  ?>
+                  <!-- <td> 
+                    <form method="POST" action="<?php echo base_url('komisimusik/add_volunter_to_schedule');?>">
+                      <input type="submit" class="btn btn-default btn-primary" value="Add Volunter"/>
+                    </form>
+                  </td> -->
+                  <!-- <td> <button>Delete</button> </td> -->
+                  <!-- <tr> -->
+                  <?php } ?>
+
+                </table>
+              </div>
+            
             </div>
           </div>
         </div>
@@ -162,7 +204,15 @@
     </div>
 
     <!-- TODO
-    Buat insert pelayan sesuai komisi
+    EVENT
+    Buat insert pelayan untuk event sesuai komisi.
+    Button di page yang nampilin event. Button berfungsi sebagai redirect ke page insert.
+    Button delete
+
+    INDEX
+    Tampilin notif
+
+
      -->
 
     <!-- jQuery -->

@@ -1,17 +1,31 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class KomisiMusik extends CI_Controller {
+class komisimusik extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
 		$this->load->helper('url','form','html');
 		$this->load->model('NotifModel','NM');
+		$this->load->model('EventModel','EM');
 	}
 
 	public function index()
 	{
+		// $data['result'] = $this->NM->active_record_get_notif();
 		$this->load->view('komisimusik/index.php');
 	}
+	public function schedule(){
+		
+		$get_events = $this->EM->ar_get_event();
+		$data['get_events'] = $get_events;
+		$this->load->view('komisimusik/schedule.php', $data);
+	}
+	public function add_volunter_to_schedule($event_id){
+		
+		$data['get_event_info_by_id']  = $this->EM->ar_get_event_by_id($event_id);
+		$this->load->view('komisimusik/add_schedule.php', $data);
+	}
+
 	public function news_feed(){
 		// TODO
 		// css, terus time ago, span hr, see all alerts, facebook scrolling
@@ -49,6 +63,9 @@ class KomisiMusik extends CI_Controller {
 		);
 		echo json_encode($data);
 	}
+	// public function get_event(){
+	// 	$arr  = $this->NM->get_notif();
+	// }
 }
 
 

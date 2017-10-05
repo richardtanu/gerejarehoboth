@@ -45,6 +45,7 @@ Class NotifModel extends CI_Model
 		$DB1->update('notifikasi');
 
 	}	
+	
 
 	public function get_notif(){
 		// Query

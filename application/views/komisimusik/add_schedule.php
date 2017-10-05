@@ -123,7 +123,8 @@
             
             <div class="page-title">
               <div class="title_left">
-                <h3>What's going on?!</h3>
+                <h3>Schedule > add</h3>
+                harusnya ada breadscrumb
               </div>
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
@@ -140,12 +141,109 @@
             <div class="clearfix"></div>
 
             <div class="row">
-             <!--  <?php echo "get created event";
-                foreach ($result as $key) {
-                  echo $key->event_name;
-                }
-              ?> -->
-            </div>
+              <div class="col-md-12">
+                <?php foreach ($get_event_info_by_id as $key) { ?>
+                  <h3>Event Info <i class="fa fa-info-circle" aria-hidden="true"></i></h5>
+                  <p>This event held on <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <?php $date = $key->start_at; echo substr($date, 0, 10);?></p>
+                  <table class="table table-striped">
+                    <tr>
+                      <td>
+                        Event name
+                      </td>
+                      <td>
+                        Start at
+                      </td>
+                      <td>
+                        End at
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <?php echo $key->event_name;
+                        ?>
+                      </td>
+                      <td>
+                        <?php $temp = $key->start_at;
+                              $start = substr($temp, 11, 8);
+                              echo $start;
+                        ?>
+                      </td>
+                      <td>
+                        <?php $temp = $key->end_at;
+                              $end = substr($temp, 11, 8);
+                              echo $end;
+                        ?>
+                      </td>
+
+                    </tr>
+                  </table>
+                  <!-- <label><p><?php echo $key->id_event;?></p></label> -->
+                  <?php
+                }?>
+                
+              </div>
+              <div class="col-md-12">
+                <form>
+                  <div class="container-fluid form">
+                    <div class="form-group col-md-6">
+                      <label for="" class="col-form-label">Worship Leader</label>
+                      <input type="email" class="form-control" id="" placeholder="">
+                     <!--  <br>
+                      <button type="submit" class="btn btn-primary">Add Worship Leader</button> -->
+                    </div>
+                    
+                  </div>
+                  <div class="container-fluid form">
+                    <div class="form-group col-md-6">
+                      <label for="" class="col-form-label">Singers</label>
+                      <input type="email" class="form-control" id="" placeholder="">
+                     <!--  <br>
+                      <button type="submit" class="btn btn-primary">Add Worship Leader</button> -->
+                    </div>
+                    
+                  </div>
+                  <div class="container-fluid form">
+                    <div class="form-group col-md-6">
+                      <label for="" class="col-form-label">Keyboard</label>
+                      <input type="email" class="form-control" id="" placeholder="">
+                     <!--  <br>
+                      <button type="submit" class="btn btn-primary">Add Worship Leader</button> -->
+                    </div>
+                    
+                  </div>
+                  <div class="container-fluid form">
+                    <div class="form-group col-md-6">
+                      <label for="" class="col-form-label">Guitar</label>
+                      <input type="email" class="form-control" id="" placeholder="">
+                     <!--  <br>
+                      <button type="submit" class="btn btn-primary">Add Worship Leader</button> -->
+                    </div>
+                    
+                  </div>
+                  <div class="container-fluid form">
+                    <div class="form-group col-md-6">
+                      <label for="" class="col-form-label">Bass</label>
+                      <input type="email" class="form-control" id="" placeholder="">
+                     <!--  <br>
+                      <button type="submit" class="btn btn-primary">Add Worship Leader</button> -->
+                    </div>
+                    
+                  </div>
+                  <div class="container-fluid form">
+                    <div class="form-group col-md-6">
+                      <label for="" class="col-form-label">Drum</label>
+                      <input type="email" class="form-control" id="" placeholder="">
+                     <!--  <br>
+                      <button type="submit" class="btn btn-primary">Add Worship Leader</button> -->
+                    </div>
+                    
+                  </div>
+                </form>
+              </div>
+              
+
+        <!-- jangan di ubah2 -->
           </div>
         </div>
         <!-- /page content -->
@@ -162,7 +260,17 @@
     </div>
 
     <!-- TODO
-    Buat insert pelayan sesuai komisi
+    EVENT
+    Buat insert pelayan untuk event sesuai komisi.
+    Button di page yang nampilin event. Button berfungsi sebagai redirect ke page insert.
+    Button delete
+
+    INDEX
+    Tampilin notif
+
+    ADD_VOLUNTER PAGE
+    Buat form insert
+
      -->
 
     <!-- jQuery -->
