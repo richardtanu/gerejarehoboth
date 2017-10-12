@@ -169,12 +169,14 @@
                     $end = substr($temp, 11, 8);
                     echo "<td>".$end."</td>";
                     echo "<td>";
-                    echo "<form method='post' action='".base_url()."komisimusik/add_volunter_to_schedule/".$key->id_event."'>";
-                    echo "<input type='submit' clas='btn btn-default' value='Add Volunter'/>";
-                    echo "</form>";
-                    echo "</td>";
-                    echo "</tr>";
-                  ?>
+                     ?>
+                    <form method='post' action='<?php echo base_url("komisimusik/add_volunter_to_schedule");?>' >
+                    <input type="hidden" name="event_id_hidden" value="<?php echo $key->id_event;?>">
+                    <input type='submit' clas='btn btn-primary btn-default' value='Add Volunter'/>
+                    </form>
+                    </td>
+                    </tr>
+                  
                   <!-- <td> 
                     <form method="POST" action="<?php echo base_url('komisimusik/add_volunter_to_schedule');?>">
                       <input type="submit" class="btn btn-default btn-primary" value="Add Volunter"/>
@@ -232,8 +234,9 @@
     <!-- bootstrap-daterangepicker -->
     <script src="<?php echo base_url();?>assets/admin/js/datepicker/daterangepicker.js"></script>
     <script src="<?php echo base_url();?>assets/admin/starrr/dist/starrr.js"></script>
-    <script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>">
-    </script>
+
+    <!-- jquery autocomplete -->
+    <script src="<?php echo base_url();?>assets/bootstrap3-typeahead.js"></script>
     <script>
     $(document).ready(function(){
      

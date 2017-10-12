@@ -188,54 +188,42 @@
                   <div class="container-fluid form">
                     <div class="form-group col-md-6">
                       <label for="" class="col-form-label">Worship Leader</label>
-                      <input type="email" class="form-control" id="" placeholder="">
-                     <!--  <br>
-                      <button type="submit" class="btn btn-primary">Add Worship Leader</button> -->
+                      <input type="text" class="form-control" id="autocomplete_wl" placeholder="Worship Leader">
                     </div>
                     
                   </div>
                   <div class="container-fluid form">
                     <div class="form-group col-md-6">
                       <label for="" class="col-form-label">Singers</label>
-                      <input type="email" class="form-control" id="" placeholder="">
-                     <!--  <br>
-                      <button type="submit" class="btn btn-primary">Add Worship Leader</button> -->
+                      <input type="text" class="form-control" id="autocomplete_singers" placeholder="Singers">
                     </div>
                     
                   </div>
                   <div class="container-fluid form">
                     <div class="form-group col-md-6">
                       <label for="" class="col-form-label">Keyboard</label>
-                      <input type="email" class="form-control" id="" placeholder="">
-                     <!--  <br>
-                      <button type="submit" class="btn btn-primary">Add Worship Leader</button> -->
+                      <input type="text" class="form-control" id="autocomplete_keyboard" placeholder="Keyboard Player">
                     </div>
                     
                   </div>
                   <div class="container-fluid form">
                     <div class="form-group col-md-6">
                       <label for="" class="col-form-label">Guitar</label>
-                      <input type="email" class="form-control" id="" placeholder="">
-                     <!--  <br>
-                      <button type="submit" class="btn btn-primary">Add Worship Leader</button> -->
+                      <input type="text" class="form-control" id="autocomplete_guitar" placeholder="Guitar Player">
                     </div>
                     
                   </div>
                   <div class="container-fluid form">
                     <div class="form-group col-md-6">
                       <label for="" class="col-form-label">Bass</label>
-                      <input type="email" class="form-control" id="" placeholder="">
-                     <!--  <br>
-                      <button type="submit" class="btn btn-primary">Add Worship Leader</button> -->
+                      <input type="text" class="form-control" id="autocomplete_bass" placeholder="Bass  Player">
                     </div>
                     
                   </div>
                   <div class="container-fluid form">
                     <div class="form-group col-md-6">
                       <label for="" class="col-form-label">Drum</label>
-                      <input type="email" class="form-control" id="" placeholder="">
-                     <!--  <br>
-                      <button type="submit" class="btn btn-primary">Add Worship Leader</button> -->
+                      <input type="text" class="form-control" id="autocomplete_drum" placeholder="Drum  Player">
                     </div>
                     
                   </div>
@@ -290,63 +278,155 @@
     <!-- bootstrap-daterangepicker -->
     <script src="<?php echo base_url();?>assets/admin/js/datepicker/daterangepicker.js"></script>
     <script src="<?php echo base_url();?>assets/admin/starrr/dist/starrr.js"></script>
-    <script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>">
+    <!-- jquery autocomplete -->
+    <script src="<?php echo base_url();?>assets/admin/bootstrap3-typeahead.js"></script>
+    <!-- notif -->
+    <script>
+      $(document).ready(function(){
+       
+       function load_unseen_notification(view = '')
+       {
+        $.ajax({
+         url:"<?php echo base_url('komisimusik/news_feed');?>",
+         method:"POST",
+         data:{view:view},
+         dataType:"json",
+         success:function(data)
+         {
+          $(' #news_feed').html(data.notification);
+          if(data.unseen_notification > 0)
+          {
+           $('#li_notif .dropdown-toggle #count_message').html(data.unseen_notification);
+          }
+         }
+        });
+       }
+       
+       load_unseen_notification();
+       
+       $(document).on('click', '#click_me_please', function(){
+        $('#count_message').html('0');
+        load_unseen_notification('yes');
+       });
+       
+       setInterval(function(){ 
+        load_unseen_notification(); 
+       }, 5000);
+      });
+    </script>
+    <!-- autocomplete -->
+    <script>
+      $(document).ready(function(){
+        $.ajax({
+            url: "<?php echo base_url('komisimusik/get_worship_leader');?>",
+            type: "POST",
+            dataType: "json",
+            // async: false,
+            success: function(result) {
+                
+                var pelayan = {
+                    worship_leader: []
+                };
+                // var results = [];
+                // results = result;
+                
+                result.map(function(item) {        
+                   pelayan.worship_leader.push({ 
+                        "nama" : item.nama,
+                        "email"  : item.email,
+                        "handphone"       : item.handphone 
+                    });
+                });
+                alert(pelayan.worship_leader.nama);
+                $('#autocomplete_wl').typeahead({
+                    source: worship_leader
+                });
+            }
+        });
+        // $('#autocomplete_wl').typeahead({
+        //   source: function (query, process) {
+        //     return $.POST('<?php echo base_url('SomeFunctionToGetData');?>', 
+        //                   { query: query }, 
+        //                   function (data) {
+        //                     console.log(data);
+        //                     data = $.parseJSON(data);
+        //                     return process(data);
+        //                 });
+        //   }
+        //   // [
+        //   //   "Richard", "Zico", "Trijono", "Haryo", "Ricky"
+        //   // ]
+        // });
+      });
+    </script>
+   <!--  <script>
+      $(document).ready(function(){
+        $.ajax({
+            url: ".../GetCountries",
+            type: "POST",
+            dataType: "JSON",
+            async: false,
+            success: function(result) {
+                objects = [];
+                map = {};
+                $.each(result, function(i, object) {
+                    map[object.caption.en] = object;
+                    objects.push(object.caption.en);
+                });
+
+                $('input[name=country_title]').typeahead({
+                    minLength: 1,
+                    items: 2000,
+                    source: objects,
+                    afterSelect: function (item) {
+                        // Call function
+                        var countryId = map[item].Id;
+                        GetConsulates(countryId, null);
+                    }
+                });
+            } 
+        });
+      });
+    </script> -->
+    <script>
+      $(document).ready(function(){
+        $('#autocomplete_keyboard').typeahead({
+          source: 
+          [
+            "Shelia", "Andry", "Evelyn Runkat"
+          ]
+        });
+      });
     </script>
     <script>
-    $(document).ready(function(){
-     
-     function load_unseen_notification(view = '')
-     {
-      $.ajax({
-       url:"<?php echo base_url('KomisiMusik/news_feed');?>",
-       method:"POST",
-       data:{view:view},
-       dataType:"json",
-       success:function(data)
-       {
-        $(' #news_feed').html(data.notification);
-        if(data.unseen_notification > 0)
-        {
-         $('#li_notif .dropdown-toggle #count_message').html(data.unseen_notification);
-        }
-       }
+      $(document).ready(function(){
+        $('#autocomplete_guitar').typeahead({
+          source: 
+          [
+            "David", "Joshua", "Pipin", "Iwan R", "Gunawan"
+          ]
+        });
       });
-     }
-     
-     load_unseen_notification();
-     
-     // $('#comment_form').on('submit', function(event){
-     //  event.preventDefault();
-     //  if($('#subject').val() != '' && $('#comment').val() != '')
-     //  {
-     //   var form_data = $(this).serialize();
-     //   $.ajax({
-     //    url:"insert.php",
-     //    method:"POST",
-     //    data:form_data,
-     //    success:function(data)
-     //    {
-     //     $('#comment_form')[0].reset();
-     //     load_unseen_notification();
-     //    }
-     //   });
-     //  }
-     //  else
-     //  {
-     //   alert("Both Fields are Required");
-     //  }
-     // });
-     
-     $(document).on('click', '#click_me_please', function(){
-      $('#count_message').html('0');
-      load_unseen_notification('yes');
-     });
-     
-     setInterval(function(){ 
-      load_unseen_notification(); 
-     }, 5000);
-     
-    });
+    </script>
+    <script>
+      $(document).ready(function(){
+        $('#autocomplete_bass').typeahead({
+          source: 
+          [
+            "Leo Hansen", "Arif", "Thomas"
+          ]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function(){
+        $('#autocomplete_drum').typeahead({
+          source: 
+          [
+            "Richard", "Zico", "Trijono", "Haryo", "Jeremy", "Marco", "Ateng"
+          ]
+        });
+      });
     </script>
   </body>
 </html>

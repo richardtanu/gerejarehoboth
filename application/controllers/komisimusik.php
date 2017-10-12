@@ -20,8 +20,8 @@ class komisimusik extends CI_Controller {
 		$data['get_events'] = $get_events;
 		$this->load->view('komisimusik/schedule.php', $data);
 	}
-	public function add_volunter_to_schedule($event_id){
-		
+	public function add_volunter_to_schedule(){
+		$event_id = $this->input->post('event_id_hidden');
 		$data['get_event_info_by_id']  = $this->EM->ar_get_event_by_id($event_id);
 		$this->load->view('komisimusik/add_schedule.php', $data);
 	}
@@ -66,6 +66,13 @@ class komisimusik extends CI_Controller {
 	// public function get_event(){
 	// 	$arr  = $this->NM->get_notif();
 	// }
+	public function get_worship_leader(){
+		
+		$result = $this->NM->get_worship_leader();
+
+		echo json_encode($result);
+
+	}
 }
 
 

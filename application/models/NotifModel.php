@@ -109,5 +109,41 @@ Class NotifModel extends CI_Model
 		}
 	}
 
+		// 1 	Pelayan Firman
+		// 2 	Worship Leader 	
+		// 3 	Singers 	
+		// 4 	Choir 	
+		// 5 	Keyboardist 
+		// 6 	Guitarits 	
+		// 7 	Bassist 	
+		// 8 	Drummer 	
+		// 9 	Soundman 	
+		// 10 	Cameraman 	
+		// 11 	Navigator 	
+		// 12 	Lighting 	
+		// 13 	Content Multimedia 	
+		// 14 	Event Organizer 	
+		// 15 	Usher 	
+		// 16 	Kolektan
+
+	public function get_worship_leader(){
+		// SELECT * FROM `pelayan_jenis_pelayanan` JOIN pelayan ON pelayan_jenis_pelayanan.id_pelayan = pelayan.id_pelayan WHERE pelayan_jenis_pelayanan.id_jenis_pelayanan = 8;
+		 	
+		$DB1 = $this->load->database('testdb', TRUE);
+
+		$DB1->select('id_pelayan_jenis_pelayanan, pelayan.id_pelayan, id_jenis_pelayanan, nama, email, handphone');
+		$DB1->from('pelayan_jenis_pelayanan');
+		$DB1->join('pelayan','pelayan_jenis_pelayanan.id_pelayan = pelayan.id_pelayan');
+		$DB1->where('pelayan_jenis_pelayanan.id_jenis_pelayanan', 2);
+
+		$query = $DB1->get();
+
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+
 }
 ?>
