@@ -126,7 +126,7 @@
                 <h3>Schedule > add</h3>
                 harusnya ada breadscrumb
               </div>
-              <div class="title_right">
+             <!--  <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search for...">
@@ -135,15 +135,15 @@
                     </span>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <div class="clearfix"></div>
 
             <div class="row">
-              <div class="col-md-12">
+              <!-- <div class="col-md-12">
                 <?php foreach ($get_event_info_by_id as $key) { ?>
-                  <h3>Event Info <i class="fa fa-info-circle" aria-hidden="true"></i></h5>
+                  <h3>Event Info <i class="fa fa-info-circle" aria-hidden="true"></i></h3>
                   <p>This event held on <i class="fa fa-calendar" aria-hidden="true"></i>
                     <?php $date = $key->start_at; echo substr($date, 0, 10);?></p>
                   <table class="table table-striped">
@@ -178,13 +178,13 @@
 
                     </tr>
                   </table>
-                  <!-- <label><p><?php echo $key->id_event;?></p></label> -->
+                  <label><p><?php echo $key->id_event;?></p></label> 
                   <?php
-                }?>
+                }?>-->
                 
-              </div>
+              <!-- </div> --> 
               <div class="col-md-12">
-                <form>
+                <form class="form">
                   <div class="container-fluid form">
                     <div class="form-group col-md-6">
                       <label for="" class="col-form-label">Worship Leader</label>
@@ -192,46 +192,81 @@
                     </div>
                     
                   </div>
+                  <!-- <hr> -->
                   <div class="container-fluid form">
-                    <div class="form-group col-md-6">
-                      <label for="" class="col-form-label">Singers</label>
-                      <input type="text" class="form-control" id="autocomplete_singers" placeholder="Singers">
+                  
+                    <div class="form-group col-md-12"  >
+                      <div class="col-md-6">
+                        <label>Singers</label>
+                        <button type="button" class="btn btn-outline-success btn-sm" id="addMoreBtnSingers"><i class="glyphicon glyphicon-plus"></i> More</button> 
+                      </div>
                     </div>
-                    
+                    <div class="form-group col-md-6">
+                      
+                      <input type="text" class="form-control autocomplete_singers" name="autocomplete_singers" placeholder="Singers">
+                    </div>
+                    <div id="addMoreSingers">
+                      
+                    </div>
                   </div>
+                  <!-- <hr> -->
                   <div class="container-fluid form">
-                    <div class="form-group col-md-6">
-                      <label for="" class="col-form-label">Keyboard</label>
-                      <input type="text" class="form-control" id="autocomplete_keyboard" placeholder="Keyboard Player">
+                    <div class="form-group col-md-12">
+                      <label>Keyboard</label>
+                      <button class="btn btn-outline-success btn-sm" id="addMoreBtnKeyboard"><i class="glyphicon glyphicon-plus"></i> More</button> 
                     </div>
-                    
+                    <div class="form-group col-md-12" style="">
+                     
+                      <input type="text" class="form-control autocomplete_keyboard" name="autocomplete_keyboard" placeholder="Keyboard">
+                    </div>
+                    <div id="addMoreKeyboard">
+                      
+                    </div>
                   </div>
+                  <!-- <hr> -->
                   <div class="container-fluid form">
                     <div class="form-group col-md-6">
                       <label for="" class="col-form-label">Guitar</label>
-                      <input type="text" class="form-control" id="autocomplete_guitar" placeholder="Guitar Player">
+                      <input type="text" class="form-control" id="autocomplete_guitar" name="autocomplete_guitar" placeholder="Guitar Player">
                     </div>
                     
                   </div>
                   <div class="container-fluid form">
                     <div class="form-group col-md-6">
                       <label for="" class="col-form-label">Bass</label>
-                      <input type="text" class="form-control" id="autocomplete_bass" placeholder="Bass  Player">
+                      <input type="text" class="form-control" id="autocomplete_bass" name="autocomplete_bass" placeholder="Bass  Player">
                     </div>
                     
                   </div>
                   <div class="container-fluid form">
                     <div class="form-group col-md-6">
                       <label for="" class="col-form-label">Drum</label>
-                      <input type="text" class="form-control" id="autocomplete_drum" placeholder="Drum  Player">
+                      <input type="text" class="form-control" id="autocomplete_drum" name="autocomplete_drum"placeholder="Drum  Player">
                     </div>
                     
                   </div>
                 </form>
+
+                <!-- <div class="input-group control-group after-add-more">
+                  <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here">
+                  <div class="input-group-btn"> 
+                    <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                  </div>
+                </div> 
+
+                <div class="copy hide">
+                  <div class="control-group input-group" style="margin-top:10px">
+                    <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here">
+                    <div class="input-group-btn"> 
+                      <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                    </div>
+                  </div>
+                </div> -->
+
               </div>
               
 
-        <!-- jangan di ubah2 -->
+        <!-- jangan di ubah2
           </div>
         </div>
         <!-- /page content -->
@@ -250,14 +285,12 @@
     <!-- TODO
     EVENT
     Buat insert pelayan untuk event sesuai komisi.
-    Button di page yang nampilin event. Button berfungsi sebagai redirect ke page insert.
-    Button delete
-
-    INDEX
-    Tampilin notif
+    Button delete.
 
     ADD_VOLUNTER PAGE
-    Buat form insert
+    Add to schedule button.
+    Group added servant (worship leader, guitar). Inserting more than one input name(by checklist, button with jquery, or?).
+    Stupid grid.. make new ones.
 
      -->
 
@@ -312,11 +345,16 @@
        setInterval(function(){ 
         load_unseen_notification(); 
        }, 5000);
+       return false;
       });
     </script>
     <!-- autocomplete -->
-    <script>
-      $(document).ready(function(){
+    
+    <!-- autocomplete worshipleader -->
+    <script type="text/javascript">
+      $(document ).ready(function(){
+        // e.preventDefault();
+        var worship_leader = new Array;
         $.ajax({
             url: "<?php echo base_url('komisimusik/get_worship_leader');?>",
             type: "POST",
@@ -324,107 +362,216 @@
             // async: false,
             success: function(result) {
                 
-                var pelayan = {
-                    worship_leader: []
-                };
-                // var results = [];
-                // results = result;
-                
-                result.map(function(item) {        
-                   pelayan.worship_leader.push({ 
-                        "nama" : item.nama,
-                        "email"  : item.email,
-                        "handphone"       : item.handphone 
-                    });
+                // var worship_leader = new Array;
+                $.map(result, function(data){
+                    var group;
+                    group = {
+                        id_pelayan: data.id_pelayan,
+                        nama: data.nama
+                    };
+                    worship_leader.push(group);
                 });
-                alert(pelayan.worship_leader.nama);
                 $('#autocomplete_wl').typeahead({
-                    source: worship_leader
+                        source: worship_leader,
+                        displayText: function (item){ return item.nama},
+                        afterSelect: function (item){ return item.id_pelayan}
+                });
+              
+            }
+        }); 
+      });
+    </script>
+
+    <!-- autocomplete singers -->
+    <script>
+      $(document).ready(function(){
+        var singers = new Array;
+        $.ajax({
+            url: "<?php echo base_url('komisimusik/get_singers');?>",
+            type: "POST",
+            dataType: "json",
+            // async: false,
+            success: function(result) {
+                
+               
+                $.map(result, function(data){
+                    var group;
+                    group = {
+                        id_pelayan: data.id_pelayan,
+                        nama: data.nama,
+                        selected: false
+                    };
+                    singers.push(group);
                 });
             }
         });
-        // $('#autocomplete_wl').typeahead({
-        //   source: function (query, process) {
-        //     return $.POST('<?php echo base_url('SomeFunctionToGetData');?>', 
-        //                   { query: query }, 
-        //                   function (data) {
-        //                     console.log(data);
-        //                     data = $.parseJSON(data);
-        //                     return process(data);
-        //                 });
-        //   }
-        //   // [
-        //   //   "Richard", "Zico", "Trijono", "Haryo", "Ricky"
-        //   // ]
-        // });
+        $('.autocomplete_singers').typeahead({
+                    source: singers,
+                    displayText: function (item){ return item.nama},
+                    afterSelect: function (item){ return item.id_pelayan}
+        });
+        // var taOptsHash = {
+        //   source: singers},
+        //   {displayText: function (item){ return item.nama}},
+        //   {afterSelect: function (item){ return item.id_pelayan}};
+        function initTypeAhead(optsHash, count) {
+            $('.autocomplete_singers'+count).typeahead({
+              source: singers,
+              displayText: function (item){ return item.nama},
+              afterSelect: function (item){ return item.id_pelayan}
+            });
+        }
+        $( "#addMoreBtnSingers" ).on( "click", function(e) {
+          e.preventDefault();
+          var count = $( ".autocomplete_singers" ).length;
+          var html = '<div class="form-group col-md-6"><input name="autocomplete_singers'+
+                      count+
+                     '"class="form-control autocomplete_singers'+
+                     count+
+                     '" placeholder="Singers" type="text"></div>';
+
+          $("#addMoreSingers").append(html);
+          initTypeAhead(taOptsHash, count);
+          return false;
+        });
+      // return false;
       });
     </script>
-   <!--  <script>
+    <script>
+      $(document).ready(function(){
+        var keyboard = new Array;
+        $.ajax({
+            url: "<?php echo base_url('komisimusik/get_keyboard_player');?>",
+            type: "POST",
+            dataType: "json",
+            // async: false,
+            success: function(result) {
+                
+               
+                $.map(result, function(data){
+                    var group;
+                    group = {
+                        id_pelayan: data.id_pelayan,
+                        nama: data.nama,
+                        selected: false
+                    };
+                    keyboard.push(group);
+                });
+            }
+        });
+        $('.autocomplete_keyboard').typeahead({
+                    source: keyboard,
+                    displayText: function (item){ return item.nama},
+                    afterSelect: function (item){ return item.id_pelayan}
+        });
+        // var taOptsHash = {
+        //   source: keyboard},
+        //   {displayText: function (item){ return item.nama}},
+        //   {afterSelect: function (item){ return item.id_pelayan}};
+        function initTypeAhead(optsHash, count) {
+            $('.autocomplete_keyboard'+count).typeahead({
+              source: keyboard,
+              displayText: function (item){ return item.nama},
+              afterSelect: function (item){ return item.id_pelayan}
+            });
+        }
+        $( "#addMoreBtnKeyboard" ).on( "click", function(e) {
+          e.preventDefault();
+          var count = $( ".autocomplete_keyboard" ).length;
+          var html = '<div class="form-group col-md-6"><input name="autocomplete_keyboard'+
+                      count+
+                     '"class="form-control autocomplete_keyboard'+
+                     count+
+                     '" placeholder="Keyboard" type="text"></div>';
+
+          $("#addMoreKeyboard").append(html);
+          initTypeAhead(taOptsHash, count);
+          return false;
+        });
+      // return false;
+      });
+    </script>
+    <script>
       $(document).ready(function(){
         $.ajax({
-            url: ".../GetCountries",
+            url: "<?php echo base_url('komisimusik/get_guitar_player');?>",
             type: "POST",
-            dataType: "JSON",
-            async: false,
+            dataType: "json",
+            // async: false,
             success: function(result) {
-                objects = [];
-                map = {};
-                $.each(result, function(i, object) {
-                    map[object.caption.en] = object;
-                    objects.push(object.caption.en);
+                
+                var worship_leader = new Array;
+                $.map(result, function(data){
+                    var group;
+                    group = {
+                        id_pelayan: data.id_pelayan,
+                        nama: data.nama
+                    };
+                    worship_leader.push(group);
                 });
 
-                $('input[name=country_title]').typeahead({
-                    minLength: 1,
-                    items: 2000,
-                    source: objects,
-                    afterSelect: function (item) {
-                        // Call function
-                        var countryId = map[item].Id;
-                        GetConsulates(countryId, null);
-                    }
+                $('#autocomplete_guitar').typeahead({
+                    source: worship_leader,
+                    displayText: function (item){ return item.nama},
+                    afterSelect: function (item){ return item.id_pelayan}
                 });
-            } 
-        });
-      });
-    </script> -->
-    <script>
-      $(document).ready(function(){
-        $('#autocomplete_keyboard').typeahead({
-          source: 
-          [
-            "Shelia", "Andry", "Evelyn Runkat"
-          ]
+            }
         });
       });
     </script>
     <script>
       $(document).ready(function(){
-        $('#autocomplete_guitar').typeahead({
-          source: 
-          [
-            "David", "Joshua", "Pipin", "Iwan R", "Gunawan"
-          ]
+        $.ajax({
+            url: "<?php echo base_url('komisimusik/get_bass_player');?>",
+            type: "POST",
+            dataType: "json",
+            // async: false,
+            success: function(result) {
+                
+                var worship_leader = new Array;
+                $.map(result, function(data){
+                    var group;
+                    group = {
+                        id_pelayan: data.id_pelayan,
+                        nama: data.nama
+                    };
+                    worship_leader.push(group);
+                });
+
+                $('#autocomplete_bass').typeahead({
+                    source: worship_leader,
+                    displayText: function (item){ return item.nama},
+                    afterSelect: function (item){ return item.id_pelayan}
+                });
+            }
         });
       });
     </script>
     <script>
       $(document).ready(function(){
-        $('#autocomplete_bass').typeahead({
-          source: 
-          [
-            "Leo Hansen", "Arif", "Thomas"
-          ]
-        });
-      });
-    </script>
-    <script>
-      $(document).ready(function(){
-        $('#autocomplete_drum').typeahead({
-          source: 
-          [
-            "Richard", "Zico", "Trijono", "Haryo", "Jeremy", "Marco", "Ateng"
-          ]
+        $.ajax({
+            url: "<?php echo base_url('komisimusik/get_drum_player');?>",
+            type: "POST",
+            dataType: "json",
+            // async: false,
+            success: function(result) {
+                
+                var worship_leader = new Array;
+                $.map(result, function(data){
+                    var group;
+                    group = {
+                        id_pelayan: data.id_pelayan,
+                        nama: data.nama
+                    };
+                    worship_leader.push(group);
+                });
+
+                $('#autocomplete_drum').typeahead({
+                    source: worship_leader,
+                    displayText: function (item){ return item.nama},
+                    afterSelect: function (item){ return item.id_pelayan}
+                });
+            }
         });
       });
     </script>

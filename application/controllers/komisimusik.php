@@ -73,6 +73,42 @@ class komisimusik extends CI_Controller {
 		echo json_encode($result);
 
 	}
+	public function get_singers(){
+		
+		$result = $this->NM->get_singers();
+
+		echo json_encode($result);
+
+	}
+	public function get_keyboard_player(){
+		
+		$result = $this->NM->get_keyboard_player();
+
+		echo json_encode($result);
+
+	}
+	public function get_guitar_player(){
+		
+		$result = $this->NM->get_guitar_player();
+
+		echo json_encode($result);
+
+	}
+	public function get_bass_player(){
+		
+		$result = $this->NM->get_bass_player();
+
+		echo json_encode($result);
+
+	}
+	public function get_drum_player(){
+		
+		$result = $this->NM->get_drum_player();
+
+		echo json_encode($result);
+
+	}
+
 }
 
 
