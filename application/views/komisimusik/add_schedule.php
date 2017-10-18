@@ -185,6 +185,7 @@
               <!-- </div> --> 
               <div class="col-md-12">
                 <form class="form">
+
                   <div class="container-fluid form">
                     <div class="form-group col-md-6">
                       <label for="" class="col-form-label">Worship Leader</label>
@@ -192,22 +193,38 @@
                     </div>
                     
                   </div>
-                  <!-- <hr> -->
+                  <hr>
                   <div class="container-fluid form">
-                  
-                    <div class="form-group col-md-12"  >
-                      <div class="col-md-6">
-                        <label>Singers</label>
-                        <button type="button" class="btn btn-outline-success btn-sm" id="addMoreBtnSingers"><i class="glyphicon glyphicon-plus"></i> More</button> 
+                    <div class="panel panel-default">
+
+                      <div class="panel-heading">
+                        Singers
+                      </div>
+                      <div class="panel-body">
+
+                        <div class="input-group control-group after-add-more">
+                          <input type="text" class="form-control"  name="" placeholder="Singers">
+                          <div class="input-group-btn"> 
+                            <button class="btn btn-success add-more" type="button" id="btnsingers">
+                              <i class="glyphicon glyphicon-plus"></i> More
+                            </button>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
-                    <div class="form-group col-md-6">
-                      
-                      <input type="text" class="form-control autocomplete_singers" name="autocomplete_singers" placeholder="Singers">
+
+                    <!-- copy -->
+                    <div class="copysingers hide">
+                      <div class="control-group input-group" style="margin-top:10px">
+                        <input type="text" name="" class="form-control" placeholder="Enter Name Here">
+                        <div class="input-group-btn"> 
+                          <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                        </div>
+                      </div>
                     </div>
-                    <div id="addMoreSingers">
-                      
-                    </div>
+                    <!-- copy -->
+
                   </div>
                   <!-- <hr> -->
                   <div class="container-fluid form">
@@ -410,29 +427,41 @@
                     displayText: function (item){ return item.nama},
                     afterSelect: function (item){ return item.id_pelayan}
         });
-        // var taOptsHash = {
-        //   source: singers},
-        //   {displayText: function (item){ return item.nama}},
-        //   {afterSelect: function (item){ return item.id_pelayan}};
-        function initTypeAhead(optsHash, count) {
-            $('.autocomplete_singers'+count).typeahead({
+
+        function initTypeAhead(count) {
+            $('.autocomplete_singers').typeahead({
               source: singers,
               displayText: function (item){ return item.nama},
               afterSelect: function (item){ return item.id_pelayan}
             });
         }
-        $( "#addMoreBtnSingers" ).on( "click", function(e) {
-          e.preventDefault();
-          var count = $( ".autocomplete_singers" ).length;
-          var html = '<div class="form-group col-md-6"><input name="autocomplete_singers'+
-                      count+
-                     '"class="form-control autocomplete_singers'+
-                     count+
-                     '" placeholder="Singers" type="text"></div>';
 
-          $("#addMoreSingers").append(html);
-          initTypeAhead(taOptsHash, count);
-          return false;
+        $("#btnsingers").click(function(){ 
+          var html = $(".copysingers").html();
+          $(".after-add-more").after(html);
+        });
+
+        // $( "#addMoreBtnSingers" ).on( "click", function(e) {
+        //   e.preventDefault();
+        //   var count = $( ".autocomplete_singers" ).length;
+        //   var simpan ='<div class="copy hide">'+
+        //                 '<div class="control-group input-group" style="margin-top:10px">'+
+        //                   '<input type="text" name="autocomplete_singers'+
+        //               count+'" class="form-control" placeholder="Enter Name Here">'+
+        //                   '<div class="input-group-btn">'+
+        //                     '<button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>'+
+        //                   '</div>'+
+        //                 '</div>'+
+        //               '</div>';
+        //   $('#after-add-more').append(simpan);
+
+        //   // $("#addMoreSingers").append(html);
+        //   initTypeAhead(count);
+        //   return false;
+        // });
+
+        $("body").on("click",".remove",function(){ 
+          $(this).parents(".control-group").remove();
         });
       // return false;
       });
