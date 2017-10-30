@@ -15,10 +15,52 @@
     <link href="<?php echo base_url();?>assets/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="<?php echo base_url();?>assets/admin/production/css/custom.min.css" rel="stylesheet">
+    <!-- bootstrap tags input. -->
+    <link href="<?php echo base_url();?>assets/admin/bootstrap-tagsinput/src/bootstrap-tagsinput.css" rel="stylesheet">
+    <style type="text/css">
+      .tt-query {
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+           -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      }
 
+      .tt-hint {
+        color: #999
+      }
+
+      .tt-menu {    /* used to be tt-dropdown-menu in older versions */
+        width: 422px;
+        margin-top: 4px;
+        padding: 4px 0;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        -webkit-border-radius: 4px;
+           -moz-border-radius: 4px;
+                border-radius: 4px;
+        -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+           -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+                box-shadow: 0 5px 10px rgba(0,0,0,.2);
+      }
+
+      .tt-suggestion {
+        padding: 3px 20px;
+        line-height: 24px;
+      }
+
+      .tt-suggestion.tt-cursor,.tt-suggestion:hover {
+        color: #fff;
+        background-color: #0097cf;
+
+      }
+
+      .tt-suggestion p {
+        margin: 0;
+      }
+    </style>
     
   </head>
-
+ 
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
@@ -124,7 +166,7 @@
             <div class="page-title">
               <div class="title_left">
                 <h3>Schedule > add</h3>
-                harusnya ada breadscrumb
+                harusnya ada breadcrumbs
               </div>
              <!--  <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
@@ -184,83 +226,110 @@
                 
               <!-- </div> --> 
               <div class="col-md-12">
-                <form class="form">
+                
+                <?php 
+                  if(isset($error)){
+                    echo $error;
+                  }
+                    // echo "<script>alert('not error!');</script>";
+                ?>
+                <div class="form_error">
+                  <?php echo validation_errors(); ?>
+                </div>
+                 
+                <!-- <?php echo form_open(); ?> -->
+                <form class="form" action="<?php echo base_url('komisimusik/volunter_submit');?>"  method="POST">
 
                   <div class="container-fluid form">
-                    <div class="form-group col-md-6">
-                      <label for="" class="col-form-label">Worship Leader</label>
-                      <input type="text" class="form-control" id="autocomplete_wl" placeholder="Worship Leader">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        Worship Leader
+                      </div>
+                      <div class="panel-body">
+                        <div class="input-group control-group">
+                          <div id="taginputwl">
+                            <input type="text" class="typeahead form-control" name="taginputwl" placeholder="Worship Leader" autocomplete="off">
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    
                   </div>
+                  <!-- WL -->
                   <hr>
                   <div class="container-fluid form">
                     <div class="panel panel-default">
-
                       <div class="panel-heading">
                         Singers
                       </div>
                       <div class="panel-body">
-
-                        <div class="input-group control-group after-add-more">
-                          <input type="text" class="form-control"  name="" placeholder="Singers">
-                          <div class="input-group-btn"> 
-                            <button class="btn btn-success add-more" type="button" id="btnsingers">
-                              <i class="glyphicon glyphicon-plus"></i> More
-                            </button>
+                        <div class="input-group control-group">
+                          <div id="taginputsingers">
+                            <input type="text" class="typeahead form-control" name="taginputsingers" placeholder="Singers" autocomplete="off">
                           </div>
                         </div>
-
                       </div>
                     </div>
-
-                    <!-- copy -->
-                    <div class="copysingers hide">
-                      <div class="control-group input-group" style="margin-top:10px">
-                        <input type="text" name="" class="form-control" placeholder="Enter Name Here">
-                        <div class="input-group-btn"> 
-                          <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                  </div>
+                  <!-- singers -->
+                  <hr>
+                  <div class="container-fluid form">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <label>Keyboard</label>
+                      </div>
+                      <div class="panel-body">
+                        <div class="input-group control-group">
+                          <div id="taginputkeyboard">
+                            <input type="text" class="typeahead form-control" name="taginputkeyboard" placeholder="Keyboard" autocomplete="off">
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <!-- copy -->
-
-                  </div>
-                  <!-- <hr> -->
-                  <div class="container-fluid form">
-                    <div class="form-group col-md-12">
-                      <label>Keyboard</label>
-                      <button class="btn btn-outline-success btn-sm" id="addMoreBtnKeyboard"><i class="glyphicon glyphicon-plus"></i> More</button> 
-                    </div>
-                    <div class="form-group col-md-12" style="">
-                     
-                      <input type="text" class="form-control autocomplete_keyboard" name="autocomplete_keyboard" placeholder="Keyboard">
-                    </div>
-                    <div id="addMoreKeyboard">
-                      
-                    </div>
-                  </div>
-                  <!-- <hr> -->
-                  <div class="container-fluid form">
-                    <div class="form-group col-md-6">
-                      <label for="" class="col-form-label">Guitar</label>
-                      <input type="text" class="form-control" id="autocomplete_guitar" name="autocomplete_guitar" placeholder="Guitar Player">
-                    </div>
-                    
-                  </div>
-                  <div class="container-fluid form">
-                    <div class="form-group col-md-6">
-                      <label for="" class="col-form-label">Bass</label>
-                      <input type="text" class="form-control" id="autocomplete_bass" name="autocomplete_bass" placeholder="Bass  Player">
-                    </div>
-                    
-                  </div>
-                  <div class="container-fluid form">
-                    <div class="form-group col-md-6">
-                      <label for="" class="col-form-label">Drum</label>
-                      <input type="text" class="form-control" id="autocomplete_drum" name="autocomplete_drum"placeholder="Drum  Player">
-                    </div>
-                    
+                   </div>
+                   <div class="container-fluid form">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <label>Guitar</label>
+                        </div>
+                        <div class="panel-body">
+                          <div class="input-group control-group">
+                            <div id="taginputguitar">
+                              <input type="text" class="typeahead form-control" name="taginputguitar" placeholder="Guitar" autocomplete="off">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+                   <div class="container-fluid form">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <label>Bass</label>
+                        </div>
+                        <div class="panel-body">
+                          <div class="input-group control-group">
+                            <div id="taginputbass">
+                              <input type="text" class="typeahead form-control" name="taginputbass" placeholder="Bass" autocomplete="off">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+                   <div class="container-fluid form">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <label>Drum</label>
+                        </div>
+                        <div class="panel-body">
+                          <div class="input-group control-group">
+                            <div id="taginputdrum">
+                              <input type="text" class="typeahead form-control" name="taginputdrum" placeholder="Drum" autocomplete="off">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+                  <div class="panel-body">
+                    <input class="btn btn-success btn-sm" type="submit" name="submitButton" value="Submit" />
                   </div>
                 </form>
 
@@ -280,6 +349,9 @@
                   </div>
                 </div> -->
 
+              </div>
+              <div class="col-md-12 panel">
+                
               </div>
               
 
@@ -312,24 +384,30 @@
      -->
 
     <!-- jQuery -->
-    <script src="<?php echo base_url();?>assets/admin/jquery/dist/jquery.min.js"></script>
+    <script src="<?php echo base_url();?>assets/admin/jquery/dist/jquery.js"></script>
     <!-- Bootstrap -->
     <script src="<?php echo base_url();?>assets/admin/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
     <script src="<?php echo base_url();?>assets/admin/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
-    <script src="<?php echo base_url();?>assets/admin/nprogress/nprogress.js"></script>
+    <!-- <script src="<?php echo base_url();?>assets/admin/nprogress/nprogress.js"></script> -->
     <!-- bootstrap-daterangepicker -->
-    <script src="<?php echo base_url();?>assets/admin/production/js/moment/moment.min.js"></script>
+    <!-- <script src="<?php echo base_url();?>assets/admin/production/js/moment/moment.min.js"></script> -->
     <!-- Custom Theme Scripts -->
     <!-- <script src="<?php echo base_url();?>assets/admin/production/js/custom.min.js"></script> -->
     <!-- bootstrap-progressbar -->
-    <script src="<?php echo base_url();?>assets/admin/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- <script src="<?php echo base_url();?>assets/admin/bootstrap-progressbar/bootstrap-progressbar.min.js"></script> -->
     <!-- bootstrap-daterangepicker -->
-    <script src="<?php echo base_url();?>assets/admin/js/datepicker/daterangepicker.js"></script>
-    <script src="<?php echo base_url();?>assets/admin/starrr/dist/starrr.js"></script>
+    <!-- <script src="<?php echo base_url();?>assets/admin/js/datepicker/daterangepicker.js"></script> -->
+    <!-- <script src="<?php echo base_url();?>assets/admin/starrr/dist/starrr.js"></script> -->
     <!-- jquery autocomplete -->
-    <script src="<?php echo base_url();?>assets/admin/bootstrap3-typeahead.js"></script>
+    <!-- <script src="<?php echo base_url();?>assets/admin/bootstrap3-typeahead.js"></script> -->
+    <!-- typeahead.js bloodhound -->
+    <script src="<?php echo base_url();?>assets/admin/bloodhound.js"></script>
+    <!-- typeahead.js bloodhound -->
+    <script src="<?php echo base_url();?>assets/admin/typeahead.jquery.js"></script>
+    <!-- tags bootstrap input -->
+    <script src="<?php echo base_url();?>assets/admin/bootstrap-tagsinput/src/bootstrap-tagsinput.js"></script>
     <!-- notif -->
     <script>
       $(document).ready(function(){
@@ -366,243 +444,523 @@
       });
     </script>
     <!-- autocomplete -->
-    
+      
     <!-- autocomplete worshipleader -->
-    <script type="text/javascript">
+ <!--    <script type="text/javascript">
+      
       $(document ).ready(function(){
+
+        // var anjing = new bloodhound(){
+          
+        // }
+        $('#typeaheadWorshipLeader').typeahead({
+
+        });
+      // });
         // e.preventDefault();
-        var worship_leader = new Array;
-        $.ajax({
-            url: "<?php echo base_url('komisimusik/get_worship_leader');?>",
-            type: "POST",
-            dataType: "json",
-            // async: false,
-            success: function(result) {
+        // var worship_leader = new Array;
+        // $.ajax({
+        //     url: "<?php echo base_url('komisimusik/get_worship_leader');?>",
+        //     type: "POST",
+        //     dataType: "json",
+        //     // async: false,
+        //     success: function(result) {
                 
-                // var worship_leader = new Array;
-                $.map(result, function(data){
-                    var group;
-                    group = {
-                        id_pelayan: data.id_pelayan,
-                        nama: data.nama
-                    };
-                    worship_leader.push(group);
-                });
-                $('#autocomplete_wl').typeahead({
-                        source: worship_leader,
-                        displayText: function (item){ return item.nama},
-                        afterSelect: function (item){ return item.id_pelayan}
-                });
-              
-            }
-        }); 
-      });
-    </script>
-
-    <!-- autocomplete singers -->
-    <script>
-      $(document).ready(function(){
-        var singers = new Array;
-        $.ajax({
-            url: "<?php echo base_url('komisimusik/get_singers');?>",
-            type: "POST",
-            dataType: "json",
-            // async: false,
-            success: function(result) {
-                
-               
-                $.map(result, function(data){
-                    var group;
-                    group = {
-                        id_pelayan: data.id_pelayan,
-                        nama: data.nama,
-                        selected: false
-                    };
-                    singers.push(group);
-                });
-            }
-        });
-        $('.autocomplete_singers').typeahead({
-                    source: singers,
-                    displayText: function (item){ return item.nama},
-                    afterSelect: function (item){ return item.id_pelayan}
-        });
-
-        function initTypeAhead(count) {
-            $('.autocomplete_singers').typeahead({
-              source: singers,
-              displayText: function (item){ return item.nama},
-              afterSelect: function (item){ return item.id_pelayan}
-            });
-        }
-
-        $("#btnsingers").click(function(){ 
-          var html = $(".copysingers").html();
-          $(".after-add-more").after(html);
-        });
-
-        // $( "#addMoreBtnSingers" ).on( "click", function(e) {
-        //   e.preventDefault();
-        //   var count = $( ".autocomplete_singers" ).length;
-        //   var simpan ='<div class="copy hide">'+
-        //                 '<div class="control-group input-group" style="margin-top:10px">'+
-        //                   '<input type="text" name="autocomplete_singers'+
-        //               count+'" class="form-control" placeholder="Enter Name Here">'+
-        //                   '<div class="input-group-btn">'+
-        //                     '<button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>'+
-        //                   '</div>'+
-        //                 '</div>'+
-        //               '</div>';
-        //   $('#after-add-more').append(simpan);
-
-        //   // $("#addMoreSingers").append(html);
-        //   initTypeAhead(count);
-        //   return false;
+        //         var worship_leader = new Array;
+        //         result.map(function(data){
+        //             var group;
+        //             group = {
+        //               value: data.nama
+        //               // key: data.nama
+        //             };
+        //             worship_leader.push(group);
+        //         });
+        //         // console.log(result);
+        //         // $('.auto_wl').tagsinput({
+        //         //   typeahead: {
+        //         //     source: result.map(function(item){
+        //         //       return item.value;
+        //         //     }),
+        //         //     afterSelect: function() {
+        //         //       this.$element[0].value = '';
+        //         //     }
+        //         //   }
+        //         // });
+        //     }
         // });
+        // var $input = $(".auto_wl");
+        // $input.typeahead({
+        //   source: function(query, process){
+        //     $.ajax({
+        //       url: "<?php echo base_url('komisimusik/get_worship_leader');?>",
+        //       type: "POST",
+        //       dataType: "json",
 
-        $("body").on("click",".remove",function(){ 
-          $(this).parents(".control-group").remove();
-        });
-      // return false;
+        //     });
+        //   },
+        //   autoSelect: true
+        // });
+        // $input.change(function() {
+        //   var current = $input.typeahead("getActive");
+        //   if (current) {
+        //     // Some item from your model is active!
+        //     if (current.name == $input.val()) {
+        //       // This means the exact match is found. Use toLowerCase() if you want case insensitive match.
+        //     } else {
+        //       // This means it is only a partial match, you can either add a new item
+        //       // or take the active if you don't want new items
+        //     }
+        //   } else {
+        //     // Nothing is active so it is a new value (or maybe empty value)
+        //   }
+        // });
+        // $('input').tagsinput({
+        //   typeahead: {
+        //     name: 'citynames',
+        //     displayKey: 'name',
+        //     valueKey: 'name',
+        //     source: citynames.ttAdapter()
+        //   }
+        // });
+        // $('.auto_wl').tagsinputx({
+        //                 source: worship_leader,
+        //                 displayText: function (item){ return item.nama},
+        //                 afterSelect: function (item){ return item.id_pelayan}
+         
+        
+        
       });
-    </script>
-    <script>
-      $(document).ready(function(){
-        var keyboard = new Array;
+    </script> -->
+    <!-- autocomplete wl -->
+    <script type="text/javascript">
+      $(function() {
+      var datas = [];
+      
+
+      ajaxCallAtTheFirst();
+      var arrCopy;
+      // initializeBloodhoundAndTheOtherStuffs(arrCopy);
+      // if(){
+      //   console.log('TRUE!');
+      // }
+      
+      function ajaxCallAtTheFirst(){
         $.ajax({
-            url: "<?php echo base_url('komisimusik/get_keyboard_player');?>",
-            type: "POST",
-            dataType: "json",
-            // async: false,
-            success: function(result) {
-                
-               
-                $.map(result, function(data){
-                    var group;
-                    group = {
-                        id_pelayan: data.id_pelayan,
-                        nama: data.nama,
-                        selected: false
-                    };
-                    keyboard.push(group);
-                });
-            }
+              url: "<?php echo base_url('komisimusik/get_worship_leader');?>",
+              type: "POST",
+              dataType: "json",
+              success: function(result) {
+                processTheResult(result);
+              }
         });
-        $('.autocomplete_keyboard').typeahead({
-                    source: keyboard,
-                    displayText: function (item){ return item.nama},
-                    afterSelect: function (item){ return item.id_pelayan}
-        });
-        // var taOptsHash = {
-        //   source: keyboard},
-        //   {displayText: function (item){ return item.nama}},
-        //   {afterSelect: function (item){ return item.id_pelayan}};
-        function initTypeAhead(optsHash, count) {
-            $('.autocomplete_keyboard'+count).typeahead({
-              source: keyboard,
-              displayText: function (item){ return item.nama},
-              afterSelect: function (item){ return item.id_pelayan}
-            });
+      }
+      
+      function processTheResult(result){
+        var arr = $.map(result, function(el){
+                                  return el.nama;
+                                }
+                       );
+        arrCopy = arr;
+        // var a = [1, 2, 3];
+        var b = new Array(arr.length);
+        for (var i = 0; i < arr.length; i++) {
+          b[i] = arr[i];
         }
-        $( "#addMoreBtnKeyboard" ).on( "click", function(e) {
-          e.preventDefault();
-          var count = $( ".autocomplete_keyboard" ).length;
-          var html = '<div class="form-group col-md-6"><input name="autocomplete_keyboard'+
-                      count+
-                     '"class="form-control autocomplete_keyboard'+
-                     count+
-                     '" placeholder="Keyboard" type="text"></div>';
+        initializeBloodhoundAndTheOtherStuffs(b);
+        console.log("arrCopy inside function");
+        console.log(arrCopy);
+        console.log("-----------------------");
+        console.log(b);
+      }
 
-          $("#addMoreKeyboard").append(html);
-          initTypeAhead(taOptsHash, count);
-          return false;
+      function initializeBloodhoundAndTheOtherStuffs(arr){
+        var wl = new Bloodhound({
+        datumTokenizer:  function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        local: 
+           $.map(arr, function (result) {
+                        return {name: result};
+                      }
+                )
         });
-      // return false;
+        wl.initialize();
+
+        $('#taginputwl .typeahead').tagsinput({
+            typeaheadjs: [{
+                  minLength: 1,
+                  highlight: true,
+            },{
+                minlength: 1,
+                name: 'tesHasil',
+                displayKey: 'name',
+                valueKey: 'name',
+                source: wl.ttAdapter()
+            }],
+            freeInput : true
+        });
+        console.log("-------------------");
+        console.log(arr);
+      }
       });
     </script>
-    <script>
-      $(document).ready(function(){
-        $.ajax({
-            url: "<?php echo base_url('komisimusik/get_guitar_player');?>",
-            type: "POST",
-            dataType: "json",
-            // async: false,
-            success: function(result) {
-                
-                var worship_leader = new Array;
-                $.map(result, function(data){
-                    var group;
-                    group = {
-                        id_pelayan: data.id_pelayan,
-                        nama: data.nama
-                    };
-                    worship_leader.push(group);
-                });
+    <!-- autocomplete singers -->
+    <script type="text/javascript">
+      $(function() {
+        var datas = [];
+        
 
-                $('#autocomplete_guitar').typeahead({
-                    source: worship_leader,
-                    displayText: function (item){ return item.nama},
-                    afterSelect: function (item){ return item.id_pelayan}
-                });
-            }
-        });
-      });
-    </script>
-    <script>
-      $(document).ready(function(){
-        $.ajax({
-            url: "<?php echo base_url('komisimusik/get_bass_player');?>",
-            type: "POST",
-            dataType: "json",
-            // async: false,
-            success: function(result) {
-                
-                var worship_leader = new Array;
-                $.map(result, function(data){
-                    var group;
-                    group = {
-                        id_pelayan: data.id_pelayan,
-                        nama: data.nama
-                    };
-                    worship_leader.push(group);
-                });
+        ajaxCallAtTheFirst();
+        var arrCopy;
+        // initializeBloodhoundAndTheOtherStuffs(arrCopy);
+        // if(){
+        //   console.log('TRUE!');
+        // }
+        
+        function ajaxCallAtTheFirst(){
+          $.ajax({
+                url: "<?php echo base_url('komisimusik/get_singers');?>",
+                type: "POST",
+                dataType: "json",
+                success: function(result) {
+                  processTheResult(result);
+                }
+          });
+        }
+        
+        function processTheResult(result){
+          var arr = $.map(result, function(el){
+                                    return el.nama;
+                                  }
+                         );
+          arrCopy = arr;
+          // var a = [1, 2, 3];
+          var b = new Array(arr.length);
+          for (var i = 0; i < arr.length; i++) {
+            b[i] = arr[i];
+          }
+          initializeBloodhoundAndTheOtherStuffs(b);
+          console.log("arrCopy inside function");
+          console.log(arrCopy);
+          console.log("-----------------------");
+          console.log(b);
+        }
 
-                $('#autocomplete_bass').typeahead({
-                    source: worship_leader,
-                    displayText: function (item){ return item.nama},
-                    afterSelect: function (item){ return item.id_pelayan}
-                });
-            }
-        });
-      });
-    </script>
-    <script>
-      $(document).ready(function(){
-        $.ajax({
-            url: "<?php echo base_url('komisimusik/get_drum_player');?>",
-            type: "POST",
-            dataType: "json",
-            // async: false,
-            success: function(result) {
-                
-                var worship_leader = new Array;
-                $.map(result, function(data){
-                    var group;
-                    group = {
-                        id_pelayan: data.id_pelayan,
-                        nama: data.nama
-                    };
-                    worship_leader.push(group);
-                });
+        function initializeBloodhoundAndTheOtherStuffs(arr){
+          var wl = new Bloodhound({
+          datumTokenizer:  function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          local: 
+             $.map(arr, function (result) {
+                          return {name: result};
+                        }
+                  )
+          });
+          wl.initialize();
 
-                $('#autocomplete_drum').typeahead({
-                    source: worship_leader,
-                    displayText: function (item){ return item.nama},
-                    afterSelect: function (item){ return item.id_pelayan}
-                });
-            }
+          $('#taginputsingers .typeahead').tagsinput({
+              typeaheadjs: [{
+                    minLength: 1,
+                    highlight: true,
+              },{
+                  minlength: 1,
+                  name: 'tesHasil',
+                  displayKey: 'name',
+                  valueKey: 'name',
+                  source: wl.ttAdapter()
+              }],
+              freeInput : true
+          });
+          console.log("-------------------");
+          console.log(arr);
+        }
         });
-      });
     </script>
+    <!-- autocomplete keyboard/ -->
+    <script type="text/javascript">
+      $(function() {
+        var datas = [];
+        
+
+        ajaxCallAtTheFirst();
+        var arrCopy;
+        // initializeBloodhoundAndTheOtherStuffs(arrCopy);
+        // if(){
+        //   console.log('TRUE!');
+        // }
+        
+        function ajaxCallAtTheFirst(){
+          $.ajax({
+                url: "<?php echo base_url('komisimusik/get_keyboard_player');?>",
+                type: "POST",
+                dataType: "json",
+                success: function(result) {
+                  processTheResult(result);
+                }
+          });
+        }
+        
+        function processTheResult(result){
+          var arr = $.map(result, function(el){
+                                    return el.nama;
+                                  }
+                         );
+          arrCopy = arr;
+          // var a = [1, 2, 3];
+          var b = new Array(arr.length);
+          for (var i = 0; i < arr.length; i++) {
+            b[i] = arr[i];
+          }
+          initializeBloodhoundAndTheOtherStuffs(b);
+          console.log("arrCopy inside function");
+          console.log(arrCopy);
+          console.log("-----------------------");
+          console.log(b);
+        }
+
+        function initializeBloodhoundAndTheOtherStuffs(arr){
+          var wl = new Bloodhound({
+          datumTokenizer:  function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          local: 
+             $.map(arr, function (result) {
+                          return {name: result};
+                        }
+                  )
+          });
+          wl.initialize();
+
+          $('#taginputkeyboard .typeahead').tagsinput({
+              typeaheadjs: [{
+                    minLength: 1,
+                    highlight: true,
+              },{
+                  minlength: 1,
+                  name: 'tesHasil',
+                  displayKey: 'name',
+                  valueKey: 'name',
+                  source: wl.ttAdapter()
+              }],
+              freeInput : true
+          });
+          console.log("-------------------");
+          console.log(arr);
+        }
+        });
+    </script>
+
+    <script type="text/javascript">
+      $(function() {
+        var datas = [];
+        
+
+        ajaxCallAtTheFirst();
+        var arrCopy;
+        // initializeBloodhoundAndTheOtherStuffs(arrCopy);
+        // if(){
+        //   console.log('TRUE!');
+        // }
+        
+        function ajaxCallAtTheFirst(){
+          $.ajax({
+                url: "<?php echo base_url('komisimusik/get_guitar_player');?>",
+                type: "POST",
+                dataType: "json",
+                success: function(result) {
+                  processTheResult(result);
+                }
+          });
+        }
+        
+        function processTheResult(result){
+          var arr = $.map(result, function(el){
+                                    return el.nama;
+                                  }
+                         );
+          arrCopy = arr;
+          // var a = [1, 2, 3];
+          var b = new Array(arr.length);
+          for (var i = 0; i < arr.length; i++) {
+            b[i] = arr[i];
+          }
+          initializeBloodhoundAndTheOtherStuffs(b);
+          console.log("arrCopy inside function");
+          console.log(arrCopy);
+          console.log("-----------------------");
+          console.log(b);
+        }
+
+        function initializeBloodhoundAndTheOtherStuffs(arr){
+          var wl = new Bloodhound({
+          datumTokenizer:  function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          local: 
+             $.map(arr, function (result) {
+                          return {name: result};
+                        }
+                  )
+          });
+          wl.initialize();
+
+          $('#taginputguitar .typeahead').tagsinput({
+              typeaheadjs: [{
+                    minLength: 1,
+                    highlight: true,
+              },{
+                  minlength: 1,
+                  name: 'tesHasil',
+                  displayKey: 'name',
+                  valueKey: 'name',
+                  source: wl.ttAdapter()
+              }],
+              freeInput : true
+          });
+          console.log("-------------------");
+          console.log(arr);
+        }
+        });
+    </script>
+    <script type="text/javascript">
+      $(function() {
+        var datas = [];
+        
+
+        ajaxCallAtTheFirst();
+        var arrCopy;
+        // initializeBloodhoundAndTheOtherStuffs(arrCopy);
+        // if(){
+        //   console.log('TRUE!');
+        // }
+        
+        function ajaxCallAtTheFirst(){
+          $.ajax({
+                url: "<?php echo base_url('komisimusik/get_bass_player');?>",
+                type: "POST",
+                dataType: "json",
+                success: function(result) {
+                  processTheResult(result);
+                }
+          });
+        }
+        
+        function processTheResult(result){
+          var arr = $.map(result, function(el){
+                                    return el.nama;
+                                  }
+                         );
+          arrCopy = arr;
+          // var a = [1, 2, 3];
+          var b = new Array(arr.length);
+          for (var i = 0; i < arr.length; i++) {
+            b[i] = arr[i];
+          }
+          initializeBloodhoundAndTheOtherStuffs(b);
+          console.log("arrCopy inside function");
+          console.log(arrCopy);
+          console.log("-----------------------");
+          console.log(b);
+        }
+
+        function initializeBloodhoundAndTheOtherStuffs(arr){
+          var wl = new Bloodhound({
+          datumTokenizer:  function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          local: 
+             $.map(arr, function (result) {
+                          return {name: result};
+                        }
+                  )
+          });
+          wl.initialize();
+
+          $('#taginputbass .typeahead').tagsinput({
+              typeaheadjs: [{
+                    minLength: 1,
+                    highlight: true,
+              },{
+                  minlength: 1,
+                  name: 'tesHasil',
+                  displayKey: 'name',
+                  valueKey: 'name',
+                  source: wl.ttAdapter()
+              }],
+              freeInput : true
+          });
+          console.log("-------------------");
+          console.log(arr);
+        }
+        });
+    </script>
+    <script type="text/javascript">
+      $(function() {
+        var datas = [];
+        
+
+        ajaxCallAtTheFirst();
+        var arrCopy;
+        // initializeBloodhoundAndTheOtherStuffs(arrCopy);
+        // if(){
+        //   console.log('TRUE!');
+        // }
+        
+        function ajaxCallAtTheFirst(){
+          $.ajax({
+                url: "<?php echo base_url('komisimusik/get_drum_player');?>",
+                type: "POST",
+                dataType: "json",
+                success: function(result) {
+                  processTheResult(result);
+                }
+          });
+        }
+        
+        function processTheResult(result){
+          var arr = $.map(result, function(el){
+                                    return el.nama;
+                                  }
+                         );
+          arrCopy = arr;
+          // var a = [1, 2, 3];
+          var b = new Array(arr.length);
+          for (var i = 0; i < arr.length; i++) {
+            b[i] = arr[i];
+          }
+          initializeBloodhoundAndTheOtherStuffs(b);
+          console.log("arrCopy inside function");
+          console.log(arrCopy);
+          console.log("-----------------------");
+          console.log(b);
+        }
+
+        function initializeBloodhoundAndTheOtherStuffs(arr){
+          var wl = new Bloodhound({
+          datumTokenizer:  function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          local: 
+             $.map(arr, function (result) {
+                          return {name: result};
+                        }
+                  )
+          });
+          wl.initialize();
+
+          $('#taginputdrum .typeahead').tagsinput({
+              typeaheadjs: [{
+                    minLength: 1,
+                    highlight: true,
+              },{
+                  minlength: 1,
+                  name: 'tesHasil',
+                  displayKey: 'name',
+                  valueKey: 'name',
+                  source: wl.ttAdapter()
+              }],
+              freeInput : true
+          });
+          console.log("-------------------");
+          console.log(arr);
+        }
+        });
+    </script>
+
   </body>
 </html>

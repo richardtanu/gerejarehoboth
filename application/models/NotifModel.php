@@ -125,8 +125,7 @@ Class NotifModel extends CI_Model
 		// 14 	Event Organizer 	
 		// 15 	Usher 	
 		// 16 	Kolektan
-
-	public function get_worship_leader(){
+	public function get_wl(){
 		// SELECT * FROM `pelayan_jenis_pelayanan` JOIN pelayan ON pelayan_jenis_pelayanan.id_pelayan = pelayan.id_pelayan WHERE pelayan_jenis_pelayanan.id_jenis_pelayanan = 8;
 		 	
 		$DB1 = $this->load->database('testdb', TRUE);
@@ -137,9 +136,17 @@ Class NotifModel extends CI_Model
 		$DB1->where('pelayan_jenis_pelayanan.id_jenis_pelayanan', 2);
 
 		$query = $DB1->get();
-
+		$result = $query->result();
 		if($query->num_rows() > 0){
 			return $query->result();
+			// $wl_array = array();
+			// foreach ($result as $row) {
+			//    $wl_array[] = $row->nama;
+			// }
+			// $data = $wl_array;
+
+			// return $data;
+
 		}else{
 			return false;
 		}
@@ -155,12 +162,14 @@ Class NotifModel extends CI_Model
 		$DB1->where('pelayan_jenis_pelayanan.id_jenis_pelayanan', 3);
 
 		$query = $DB1->get();
-
+		$result = $query->result();
 		if($query->num_rows() > 0){
 			return $query->result();
 		}else{
 			return false;
 		}
+		
+
 	}
 	public function get_keyboard_player(){
 		// SELECT * FROM `pelayan_jenis_pelayanan` JOIN pelayan ON pelayan_jenis_pelayanan.id_pelayan = pelayan.id_pelayan WHERE pelayan_jenis_pelayanan.id_jenis_pelayanan = 8;

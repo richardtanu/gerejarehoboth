@@ -18,7 +18,11 @@
 
     
   </head>
-
+<?php
+  if(isset($parameter)){
+    echo "<script>console.log('".$parameter['wl']."');</script>";
+  }
+?>
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
