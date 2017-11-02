@@ -15,11 +15,7 @@
     <link href="<?php echo base_url();?>assets/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="<?php echo base_url();?>assets/admin/production/css/custom.min.css" rel="stylesheet">
-    <style type="text/css">
-      .modal-dialog{
-        width:800px;
-      }
-    </style>
+
     
   </head>
 <?php
@@ -162,7 +158,7 @@
                     </tr>
                   </thead>
 
-                  <?php
+                  <?php 
                   if($get_events == null){
                     echo "<tr>";
                       echo "<td>";
@@ -171,49 +167,44 @@
                     echo "</tr>";
                   }else{
                     foreach ($get_events as $key) {
-                      echo "<tr>";
-                      echo "<th scope='row'>".$key->id_event."</th>";
-                      echo "<td>".$key->event_name."</td>";
-                      $temp = $key->start_at;
-                      $date = substr($temp, 0, 10);
-                      echo "<td>".$date."</td>";
-                      $temp = $key->start_at;
-                      $start = substr($temp, 11, 8);
-                      echo "<td>".$start."</td>";
-                      $temp = $key->end_at;
-                      $end = substr($temp, 11, 8);
-                      echo "<td>".$end."</td>";
-                      echo "<td>";
-                      if ($key->submitted_volunter > 0) { ?>
-                      <!--  -->
-                            <form method='post' action="<?php echo base_url('komisimusik/edit_volunter_from_schedule');?>">
-                              <input type="hidden" class="hidden" name="event_id_hidden" value="<?php echo $key->id_event;?>">
-                              <input type='submit' class='btn btn-default' value='Edit' onclick='sentParameterByPhp(<?php echo $key->id_event;?>)' />
-                            </form>
-                            <button type="button" id="button_view_volunter" class='btn btn-default' onclick="showModalView(<?php echo $key->id_event;?>)" >View</button>
-                      <?php } else { ?>
-                            <form method='post' action=" <?php echo base_url('komisimusik/add_volunter_to_schedule');?>  ">
-                              <input type="hidden" class="hidden" name="event_id_hidden" value="<?php echo $key->id_event;?>">
-                              <input type='submit' class='btn btn-default' value='Add Volunter'/>
-                            </form>
-                            <button type="button" id="button_view_volunter" class='btn btn-default' onclick="showModalView(<?php echo $key->id_event;?>)" >View</button>
-                      <?php } ?>
-                           <!--  <form method='post' action="<?php echo base_url('komisimusik/add_volunter_to_schedule');?>  ">
-                              <input type="hidden" class="hidden" name="event_id_hidden" value="<?php echo $key->id_event;?>"> -->
-                                
-                            <!-- </form> -->
-                          </td>
-                      </tr>
+                    echo "<tr>";
+                    echo "<th scope='row'>".$key->id_event."</th>";
+                    echo "<td>".$key->event_name."</td>";
+                    $temp = $key->start_at;
+                    $date = substr($temp, 0, 10);
+                    echo "<td>".$date."</td>";
+                    $temp = $key->start_at;
+                    $start = substr($temp, 11, 8);
+                    echo "<td>".$start."</td>";
+                    $temp = $key->end_at;
+                    $end = substr($temp, 11, 8);
+                    echo "<td>".$end."</td>";
+                    echo "<td>";
+                    if ($key->submitted_volunter > 0) { ?>
+                          <form method='post' action="">
+                            <input type="hidden" class="hidden" name="event_id_hidden" value="<?php echo $key->id_event;?>">
+                            <input type='submit' class='btn btn-default' value='Edit'/>
+                          </form>
+                    <?php } else { ?>
+                          <form method='post' action="<?php echo base_url('komisipastoral/add_volunter_to_schedule');?>  ">
+                            <input type="hidden" class="hidden" name="event_id_hidden" value="<?php echo $key->id_event;?>">
+                            <input type='submit' class='btn btn-default' value='Add Volunter'/>
+                          </form>
+                    <?php } ?>
+                          <input type="button" id="button_view_volunter" class='btn btn-default' value='View'/>
+                        </td>
+                    </tr>
                   
-                  <!-- <td> 
-                    <form method="POST" action="<?php echo base_url('komisimusik/add_volunter_to_schedule');?>">
-                      <input type="submit" class="btn btn-default btn-primary" value="Add Volunter"/>
-                    </form>
-                  </td> -->
-                  <!-- <td> <button>Delete</button> </td> -->
-                  <!-- <tr> -->
-                  <?php } 
+                    <!-- <td> 
+                      <form method="POST" action="<?php echo base_url('komisimusik/add_volunter_to_schedule');?>">
+                        <input type="submit" class="btn btn-default btn-primary" value="Add Volunter"/>
+                      </form>
+                    </td> -->
+                    <!-- <td> <button>Delete</button> </td> -->
+                    <!-- <tr> -->
+                    <?php }
                   } ?>
+                  
 
                 </table>
               </div>
@@ -232,28 +223,55 @@
                 <h4 class="modal-title" id="myModalLabel">Volunter Submited</h4>
               </div>
               <div class="modal-body">
-                <p id='itsp'></p>
+                <p>Here's the list of volunter that assign in this events</p>
                 <br>
-                <p>Music Commision</p>
-                
-                <!-- <table class="modal_table table" id="music_commision"> 
+                <p>Pastoral Commision</p>
+                <table class="modal_table table" id="music_commision"> 
                   
-                  <tr>
+                  <tr class="modal_event_name">
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Voluntered as..</th>
-                    <th>Contact</th>
+                    <th>Volunter Name</th>
                   </tr>
+                  <tr class="modal_event_name">
+                    
+                  </tr>
+                </table>
+                <p>Music Commision</p>
+                <table class="modal_table table" id="music_commision"> 
                   
-                </table>  -->
-                <div id="sesuatu"></div>
-                <!-- loop data here -->
-                
-                
-              
+                  <tr class="modal_event_name">
+                    <th>#</th>
+                    <th>Volunter Name</th>
+                  </tr>
+                  <tr class="modal_event_name">
+                    
+                  </tr>
+                </table>
+                <p>Usher Commision</p>
+                <table class="modal_table table" id="music_commision"> 
+                  
+                  <tr class="modal_event_name">
+                    <th>#</th>
+                    <th>Volunter Name</th>
+                  </tr>
+                  <tr class="modal_event_name">
+                    
+                  </tr>
+                </table>
+                <p>Teens Commision</p>
+                <table class="modal_table table" id="music_commision"> 
+                  
+                  <tr class="modal_event_name">
+                    <th>#</th>
+                    <th>Volunter Name</th>
+                  </tr>
+                  <tr class="modal_event_name">
+                    
+                  </tr>
+                </table>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Procced</button>
               </div>
             </div>
           </div>
@@ -302,7 +320,7 @@
     <script src="<?php echo base_url();?>assets/admin/starrr/dist/starrr.js"></script>
 
     <!-- jquery autocomplete -->
-    <!-- <script src="<?php echo base_url();?>assets/bootstrap3-typeahead.js"></script> -->
+    <script src="<?php echo base_url();?>assets/bootstrap3-typeahead.js"></script>
     <script>
     $(document).ready(function(){
      
@@ -360,93 +378,22 @@
     });
     </script>
     <script type="text/javascript">
-      // $(document).ready(function(){
-        var strings = "";
-        
-        //jadiin fucntionnya dipanggil sama si button view
-        function showModalView(parameter){
-
-          var eventid = parameter;
-          var length;
-          // $('#button_view_volunter').click( function() {
-
-            // $('#view_submited_volunter').modal('show');
-            // alert(eventid);
-            $.ajax({
-              type: "POST",
-              url: "<?php echo base_url('komisimusik/view_volunter_from_schedule');?>",
-              dataType: "json",
-              data: {'event_id_throw_view' : eventid},
-              success: function(result){
-                if(result != false){
-                  $('#view_submited_volunter').modal('show');
-                  var arr = $.map(result, function(res){
-                                            return {
-                                              event_name: res.event_name, 
-                                              start_at: res.start_at,
-                                              end_at: res.end_at,
-                                              volunter_total: res.submitted_volunter,
-                                              nama: res.nama,
-                                              email: res.email,
-                                              handphone: res.handphone,
-                                              nama_pelayanan: res.nama_pelayanan
-                                            };
-                                          }
-                                  ); 
-                  // alert("event name: "+ arr[0]['event_name']); 
-                  length = arr.length; 
-                  strings = "";
-                  open = '<table class="modal_table table" id="music_commision"><tr><th>#</th><th>Name</th><th>Voluntered as..</th><th>Contact</th></tr>';
-                  close = "</table>";
-                  for (var i = 0; i < arr.length; i++) {
-                    strings += '<tr><td>'+(i+1)+'</td><td>'+arr[i]['nama']+'</td><td>'+arr[i]['nama_pelayanan']+'</td><td><i class="fa fa-envelope" aria-hidden="true"></i> '+arr[i]['email']+'<br><i class="fa fa-mobile" aria-hidden="true"></i> '+arr[i]['handphone']+'</td></tr>';
-                    // console.log(arr[i]['nama']); 
-                    // $('#music_commision').append('<tr><td>'+(i+1)+'</td><td>'+arr[i]['nama']+'</td><td>'+arr[i]['nama_pelayanan']+'</td><td>'+arr[i]['email']+'<br>'+arr[i]['handphone']+'</td></tr>');
-                  }
-                  // top  = top+strings;
-                  // $('#sesuatu').html(strings);
-                  document.getElementById('sesuatu').innerHTML = open+strings+close;
-                  document.getElementById('itsp').innerHTML = "Here's the list of volunters that assigned to this events. There are "+length+" volunters that will serve in music as a band.";
-                  // console.log(result);
-                }else{
-                  $('#view_submited_volunter').modal('show');
-                  open = "<table class='modal_table table' id='music_commision'><tr><th>#</th><th>Name</th><th>Voluntered as..</th><th>Contact</th></tr><tr><td colspan='4'><h4>There's no volunter data added yet. Please add some volunter.</h4></td></tr></table>";
-                  // close = "";
-                  // inner = "";
-                  // console.log("what? " + open);
-                  document.getElementById('sesuatu').innerHTML = open;
-                  document.getElementById('itsp').innerHTML = "There is no volunter asssigned in this event yet.";
-                  // alert('OUTSIDE IF');
-                }
-              } ,error: function(xhr, status, error) {
-                console.log("error:" + error);
-              }
-            });
-          // $('#view_submited_volunter').on('hidden.bs.modal', function () {
-          //   strings = "";
+      $(document).ready(function(){
+        $('#button_view_volunter').click( function() {
+          $('#view_submited_volunter').modal('show');
+          // $.ajax({
+          //   type: "POST",
+          //   url: "<?php echo base_url('admin/add_events');?>",
+          //   dataType: "json",
+          //   success: function(data){
+       
+                
+          //   } ,error: function(xhr, status, error) {
+          //     console.log(error);
+          //   }
           // });
-          // });
-        }
-        
-        function sentParameterByPhp(parameter){
-          var eventid = parameter;
-          alert(eventid);
-          $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('komisimusik/edit_volunter_from_schedule');?>",
-            dataType: "json",
-            data: {'event_id_throw_edit' : eventid},
-            success: function(result){
-              alert(result);
-            },
-            error: function(xhr, status, error) {
-                console.log("error:" + error);
-            }
-
-          });
-          return false;
-        }
-      // });
+        });
+      });
     </script>
   </body>
 </html>

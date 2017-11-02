@@ -36,6 +36,9 @@
                         if ($loggedIn['role'] == 'Komisi Musik') {
                             echo "<li><a href='". base_url('komisimusik/index')."'>Schedule</a></li>";
                         }
+                        if ($loggedIn['role'] == 'Komisi Evangelism') {
+                            echo "<li><a href='". base_url('komisipastoral/index')."'>Schedule</a></li>";
+                        }
                         ?>
                         <li>
                             <a href="<?php echo base_url('Login/logout')?>">Logout</a>

@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class komisimusik extends CI_Controller {
+class komisipastoral extends CI_Controller {
 
 	// public $event_id = 0;
 	public function __construct() {
@@ -9,58 +9,32 @@ class komisimusik extends CI_Controller {
 		$this->load->model('NotifModel','NM');
 		$this->load->model('EventModel','EM');
 		$this->load->helper('file');
-		$event_id = 0;
 	}
 
 	public function index()
 	{
 		// $data['result'] = $this->NM->active_record_get_notif();
-		$this->load->view('komisimusik/index.php');
+		$this->load->view('komisipastoral/index.php');
 	}
-	public function schedule(){
-		// $this->session->set_userdata('eventIdSend', $);
+	// public function schedule(){
+	// 	// $this->session->set_userdata('eventIdSend', $);
 
-		$get_events = $this->EM->get_event();
-		$data['get_events'] = $get_events;
-		$this->load->view('komisimusik/schedule.php', $data);
-	}
-	public function add_volunter_to_schedule($somevalue = null){
-		// $test = $somevalue;
-		// echo "sent by header: ".$test;
-		// $event_id = $this->session->userdata();
-		$event_id = $this->input->post('event_id_hidden');
-		// echo "<script>alert('".$event_id."');</script>";
-		//showing event time
-		$data['get_event_info_by_id']  = $this->EM->get_event_by_id($event_id);
-		if($somevalue != null){
-			$data['validation_error_message'] = $somevalue;
-		}
-		$this->load->view('komisimusik/add_schedule.php', $data);
-	}
-	public function view_volunter_from_schedule(){
-		$event_id_view = $this->input->POST('event_id_throw_view');
-
-		$get_volunter_submitted_by_id = $this->EM->get_event_view($event_id_view);
-
-		echo json_encode($get_volunter_submitted_by_id);
-	}
-
-	public function edit_volunter_from_schedule(){
-		// $event_id = $this->session->userdata('event_id_throw_edit');
-		$event_id_edit = $this->input->POST('event_id_hidden');
-		
-		$data['get_event_info_by_id']  = $this->EM->get_event_by_id($event_id_edit);
-
-		$this->load->view('komisimusik/edit_schedule.php', $data);
-	}
-	public function fetched_volunter_added_to_event_by_id(){
-
-		$id_thrown_from_edit_view = $this->input->POST('event_id_edit');
-
-		$volunter_info = $this->EM->get_submitted_volunter_to_event_by_id($id_thrown_from_edit_view);
-
-		echo json_encode($volunter_info);
-	}
+	// 	$get_events = $this->EM->get_event();
+	// 	$data['get_events'] = $get_events;
+	// 	$this->load->view('komisipastoral/schedule.php', $data);
+	// }
+	// public function add_volunter_to_schedule($somevalue = null){
+	// 	// $test = $somevalue;
+	// 	// echo "sent by header: ".$test;
+	// 	$event_id = $this->input->post('event_id_hidden');
+	// 	// echo "<script>alert('".$event_id."');</script>";
+	// 	//showing event time
+	// 	$data['get_event_info_by_id']  = $this->EM->ar_get_event_by_id($event_id);
+	// 	if($somevalue != null){
+	// 		$data['validation_error_message'] = $somevalue;
+	// 	}
+	// 	$this->load->view('komisimusik/add_schedule.php', $data);
+	// }
 
 	public function news_feed(){
 		// TODO
@@ -99,8 +73,17 @@ class komisimusik extends CI_Controller {
 		);
 		echo json_encode($data);
 	}
+	// public function get_event(){
+	// 	$arr  = $this->NM->get_notif();
+	// }
+	// public function get_worship_leader(){
+		
+	// 	$result = $this->NM->get_worship_leader();
 
-	public function get_worship_leader(){
+	// 	echo json_encode($result);
+
+	// }
+	public function get_pastoral(){
 		$result = $this->NM->get_wl();
 
 		$arr =  array();
@@ -110,66 +93,10 @@ class komisimusik extends CI_Controller {
 		}
 		echo json_encode($result);
 	}
-	
-	public function get_singers(){
-		
-		$result = $this->NM->get_singers();
-		$arr =  array();
-		for ($i=0; $i < sizeof($result); $i++) { 
-			$arr[] = $result[$i];
-		}
-		echo json_encode($result);
 
-	}
-
-	public function get_keyboard_player(){
-		
-		$result = $this->NM->get_keyboard_player();
-
-		$arr =  array();
-		for ($i=0; $i < sizeof($result); $i++) { 
-			$arr[] = $result[$i];
-		}
-		echo json_encode($result);
-
-	}
-
-	public function get_guitar_player(){
-		
-		$result = $this->NM->get_guitar_player();
-
-		$arr =  array();
-		for ($i=0; $i < sizeof($result); $i++) { 
-			$arr[] = $result[$i];
-		}
-		echo json_encode($result);
-
-	}
-	public function get_bass_player(){
-		
-		$result = $this->NM->get_bass_player();
-
-		$arr =  array();
-		for ($i=0; $i < sizeof($result); $i++) { 
-			$arr[] = $result[$i];
-		}
-		echo json_encode($result);
-
-	}
-	public function get_drum_player(){
-		
-		$result = $this->NM->get_drum_player();
-
-		$arr =  array();
-		for ($i=0; $i < sizeof($result); $i++) { 
-			$arr[] = $result[$i];
-		}
-		echo json_encode($result);
-
-	}
 
 	// get from add_volunter_to_schedule page
-	public function volunter_submit(){
+	public function pastoral_submit(){
 		
 		$this->form_validation->set_rules('taginputwl', 'Need to be filled', 'required');
 		// $this->form_validation->set_rules('taginputsingers', 'Need to be filled', 'required');
@@ -185,7 +112,6 @@ class komisimusik extends CI_Controller {
         	// $error = $this->validation_errors->error_array();
         	// $this->session->set_userdata('error', validation_errors());
             $this->add_volunter_to_schedule();
-
         }
         else
         {
@@ -279,7 +205,7 @@ class komisimusik extends CI_Controller {
             		$id_pelayan_guitar = $key->id_pelayan;
             		$id_jenis_pelayanan_guitar = $key->id_jenis_pelayanan;
             	}
-            	$detailGuitar = array('id_event' => $event_id,
+            	$detailGuitar = array('id_event' => 1,
 	            						'id_pelayan' => $id_pelayan_guitar,
 	            						'id_jenis_pelayanan' => $id_jenis_pelayanan_guitar
 	            					);
@@ -324,7 +250,6 @@ class komisimusik extends CI_Controller {
             	$globalIndex++;
             }
             $this->NM->insert_whole_music_volunter_into_event($superDetail);
-            $this->schedule();
         }
         
 		$test = $this->session->userdata('error');

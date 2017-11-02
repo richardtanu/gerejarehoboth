@@ -248,7 +248,10 @@
     pushVal: function() {
       var self = this,
           val = $.map(self.items(), function(item) {
-            return self.options.itemValue(item).toString();
+            //added line here
+            if(typeof self.options.itemValue(item) !== 'undefined'){ 
+              return self.options.itemValue(item).toString();
+            }
           });
 
       self.$element.val(val, true).trigger('change');

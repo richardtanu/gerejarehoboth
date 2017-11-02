@@ -244,5 +244,51 @@ Class NotifModel extends CI_Model
 		}
 	}
 
+	public function get_detail_by_nama($parameter, $parameter2){
+		// SELECT * FROM `pelayan_jenis_pelayanan` JOIN pelayan ON pelayan_jenis_pelayanan.id_pelayan = pelayan.id_pelayan WHERE pelayan_jenis_pelayanan.id_jenis_pelayanan = 8 AND nama = "andre";
+		$DB1 = $this->load->database('testdb', TRUE);
+
+		$DB1->select('id_pelayan_jenis_pelayanan, pelayan.id_pelayan, id_jenis_pelayanan, nama, email, handphone');
+		$DB1->from('pelayan_jenis_pelayanan');
+		$DB1->join('pelayan','pelayan_jenis_pelayanan.id_pelayan = pelayan.id_pelayan');
+		// $DB1->where('pelayan_jenis_pelayanan.id_jenis_pelayanan', 2);
+		$DB1->where('pelayan_jenis_pelayanan.id_jenis_pelayanan',	$parameter2);
+		$DB1->group_start();
+		$DB1->where('nama', $parameter);
+		$DB1->group_end();
+		$DB1->limit(1);
+		// $DB1->or_where('nama', $parameter);
+
+		$query = $DB1->get();
+
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+	// public function insert_pelayanan_into_event($parameter){
+	// 	// INSERT INTO `pelayan_event`(`id_pelayan_event`, `id_event`, `id_pelayan`, `id_jenis_pelayanan`) VALUES ([value-1],[value-2],[value-3],[value-4])
+
+	// 	$DB1 = $this->load->database('testdb', TRUE);
+
+	// 	$DB1->insert('pelayan_event', $parameter);
+	// }
+
+	public function insert_whole_music_volunter_into_event($details){
+		$DB1 = $this->load->database('testdb', TRUE);
+		$DB1->insert_batch('pelayan_event', $details);
+		// for ($i=0; $i < sizeof($details) ; $i++) { 
+		// 	$idevent; $idpelayan; $id_jenis_pelayanan;
+		// 	foreach ($details as $key) {
+		// 		$idevent = $key->id_event;
+		// 		$idpelayan = $key->id_pelayan;
+		// 		$id_jenis_pelayanan = $key->id_jenis_pelayanan;
+		// 		$DB1->insert_batch('pelayan_event', );
+		// 	}
+		// }
+		
+	}
+
 }
 ?>

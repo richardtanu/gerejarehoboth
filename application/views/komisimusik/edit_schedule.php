@@ -225,7 +225,8 @@
                         // echo $key->id_event."<br>";
                         $this->session->set_userdata('id_event_throw', $key->id_event);
                         echo "this is session id: ".$this->session->userdata('id_event_throw');
-                    ?>  
+                    ?> 
+                    <input type="hidden" id="hidden_id_edit_page" value="<?php echo $key->id_event;?>">
                     </p>
                   </label> 
                   <?php
@@ -251,6 +252,9 @@
                     <div class="panel panel-default">
                       <div class="panel-heading">
                         Worship Leader
+                      </div>
+                      <div class="well">
+                        
                       </div>
                       <div class="panel-body">
                         <div class="input-group control-group">
@@ -418,6 +422,7 @@
     <!-- tags bootstrap input -->
     <script src="<?php echo base_url();?>assets/admin/bootstrap-tagsinput/src/bootstrap-tagsinput.js"></script>
     <!-- notif -->
+    
     <script>
       $(document).ready(function(){
        
@@ -452,110 +457,79 @@
        return false;
       });
     </script>
-    <!-- autocomplete -->
-    <script type="text/javascript">
-      // $(document).ready(function(){
-      //   $( "#submitButton" ).on('click', function( event ) {
-      //     // alert( "Handler for .submit() called." );
-      //     event.preventDefault();
-      //     console.log("NYEM:");
-      //     var something = $("#taginputwl .typeahead").val();
-      //     console.log(something);
-      //   });
-      // });
-    </script>
     <!-- autocomplete wl -->
     <script type="text/javascript">
       $(function() {
-      var datas = [];
-      
+        var datas = [];
+        
 
-      ajaxCallAtTheFirst();
-      var arrCopy;
-      // initializeBloodhoundAndTheOtherStuffs(arrCopy);
-      // if(){
-      //   console.log('TRUE!');
-      // }
-      
-      function ajaxCallAtTheFirst(){
-        $.ajax({
-              url: "<?php echo base_url('komisimusik/get_worship_leader');?>",
-              type: "POST",
-              dataType: "json",
-              success: function(result) {
-                processTheResult(result);
-              }
-        });
-      }
-      
-      function processTheResult(result){
-        var arr = $.map(result, function(el){
-                                  return {nama: el.nama, id_pelayan: el.id_pelayan};
-                                }
-                       );
-        arrCopy = arr;
-        // var a = [1, 2, 3];
-        var b = new Array(arr.length);
-        for (var i = 0; i < arr.length; i++) {
-          b[i] = arr[i];
-        }
-        initializeBloodhoundAndTheOtherStuffs(b);
-        // console.log("arrCopy inside function");
-        console.log(arr);
-        // console.log("-----------------------");
-        // console.log(b);
-      }
-
-      function initializeBloodhoundAndTheOtherStuffs(arr){
-        var wl = new Bloodhound({
-        datumTokenizer:  function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        local: 
-           $.map(arr, function (result) {
-                        return {name: result.nama, value: result.id_pelayan};
-                      }
-                )
-        });
-        wl.initialize();
-
-        // var elt = $('#tagsinputwl .typeahead');
-        var elt = $('#inputwl');
-        // console.log(elt);
-        elt.tagsinput({
-            // itemValue: 'value',  // this will be used to set id of tag
-            // itemText: 'text', // this will be used to set text of tag
-            typeaheadjs: [{
-                  minLength: 1,
-                  highlight: true,
-                  
-            },{
-                minlength: 1,
-                name: 'tesHasil',
-                displayKey: 'name',
-                valueKey: 'name',
-                source: wl.ttAdapter()
-            }],
-            freeInput : false
-        });
-        // console.log("-------------------");
-        // for (var i = 0; i < arr.length; i++) {
-        //   // console.log(arr[i]['id_pelayan']);
-        //   elt.tagsinput('add',{"value": arr[i]['id_pelayan'], "text": arr[i]['nama']});
+        ajaxCallAtTheFirst();
+        var arrCopy;
+        // initializeBloodhoundAndTheOtherStuffs(arrCopy);
+        // if(){
+        //   console.log('TRUE!');
         // }
-        // elt.tagsinput('add',{"value": arr.});
-        // var value  = $('#taginputwl .typeahead').val();
-        // console.log(value);
-      }
+        
+        function ajaxCallAtTheFirst(){
+          $.ajax({
+                url: "<?php echo base_url('komisimusik/get_worship_leader');?>",
+                type: "POST",
+                dataType: "json",
+                success: function(result) {
+                  processTheResult(result);
+                }
+          });
+        }
+        
+        function processTheResult(result){
+          var arr = $.map(result, function(el){
+                                    return {nama: el.nama, id_pelayan: el.id_pelayan};
+                                  }
+                         );
+          arrCopy = arr;
+          // var a = [1, 2, 3];
+          var b = new Array(arr.length);
+          for (var i = 0; i < arr.length; i++) {
+            b[i] = arr[i];
+          }
+          initializeBloodhoundAndTheOtherStuffs(b);
+          // console.log("arrCopy inside function");
+          // console.log(arr);
+          // console.log("-----------------------");
+          // console.log(b);
+        }
 
+        function initializeBloodhoundAndTheOtherStuffs(arr){
+          var wl = new Bloodhound({
+          datumTokenizer:  function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          local: 
+             $.map(arr, function (result) {
+                          return {name: result.nama, value: result.id_pelayan};
+                        }
+                  )
+          });
+          wl.initialize();
+
+          // var elt = $('#tagsinputwl .typeahead');
+          var elt = $('#inputwl');
+          // console.log(elt);
+          elt.tagsinput({
+              typeaheadjs: [{
+                    minLength: 1,
+                    highlight: true,
+                    
+              },{
+                  minlength: 1,
+                  name: 'tesHasil',
+                  displayKey: 'name',
+                  valueKey: 'name',
+                  source: wl.ttAdapter()
+              }],
+              freeInput : false
+          });
+        }
       });
-      // var wholeWl = $('#inputwl').tagsinput('items');
-      // $('#inputwl').on('itemAdded', function(event) {
-      //   var wholeWorshipLeader = wholeWorshipLeader + event.item;
-        // console.log(wholeWl);
-      // });
-      // $('input').on('itemAdded', function(event) {
-      //   console.log(event.item);
-      // });
     </script>
     <!-- autocomplete singers -->
     <script type="text/javascript">
@@ -624,10 +598,8 @@
               }],
               freeInput : true
           });
-          console.log("-------------------");
-          // console.log(arr);
         }
-        });
+      });
     </script>
     <!-- autocomplete keyboard/ -->
     <script type="text/javascript">
@@ -696,12 +668,10 @@
               }],
               freeInput : true
           });
-          console.log("-------------------");
-          // console.log(arr);
         }
-        });
+      });
     </script>
-
+    <!-- autocomplete guitar -->
     <script type="text/javascript">
       $(function() {
         var datas = [];
@@ -768,11 +738,10 @@
               }],
               freeInput : true
           });
-          console.log("-------------------");
-          // console.log(arr);
         }
-        });
+      });
     </script>
+    <!-- autocomplete bass -->
     <script type="text/javascript">
       $(function() {
         var datas = [];
@@ -839,11 +808,12 @@
               }],
               freeInput : true
           });
-          console.log("-------------------");
+          // console.log("-------------------");
           // console.log(arr);
         }
-        });
+      });
     </script>
+    <!-- autocomplete drum -->
     <script type="text/javascript">
       $(function() {
         var datas = [];
@@ -878,7 +848,7 @@
           for (var i = 0; i < arr.length; i++) {
             b[i] = arr[i];
           }
-          initializeBloodhoundAndTheOtherStuffs(b);
+          initializeBloodhoundAndTheOtherStuffs(arr);
           // console.log("arrCopy inside function");
           // console.log(arrCopy);
           // console.log("-----------------------");
@@ -910,10 +880,51 @@
               }],
               freeInput : true
           });
-          console.log("-------------------");
+          // console.log("-------------------");
           // console.log(arr);
         }
+      });
+    </script>
+    <!-- re-fetched assigned volunteer data -->
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var tampung;
+        var result_into_arr = [];
+        var id_hidden = $('#hidden_id_edit_page').val();
+        alert("id: "+id_hidden);
+        $.ajax({
+          url: "<?php echo base_url('komisimusik/fetched_volunter_added_to_event_by_id');?>",
+          type: "POST",
+          dataType: "json",
+          data:  {'event_id_edit': id_hidden},
+          success: function(result){
+            var arr = $.map(result, function(res){
+                                  return{ nama: res.nama, id_jenis_pelayanan: res.id_jenis_pelayanan};
+                                }
+                              );
+            // for (var i = 0; i < arr.length; i++) {
+            //   result_into_arr[i] = arr[i];
+            // }
+            for (var i = 0; i < arr.length; i++) {
+              if(arr[i]['id_jenis_pelayanan'] == 2){
+                console.log("WL");
+              }else if(arr[i]['id_jenis_pelayanan'] == 3){
+                console.log("SINGERS");
+              }else if(arr[i]['id_jenis_pelayanan'] == 5){
+                console.log("KEYBOARD");
+              }else if(arr[i]['id_jenis_pelayanan'] == 6){
+                console.log("GUITAR");
+              }else if(arr[i]['id_jenis_pelayanan'] == 7){
+                console.log("BASS");
+              }else if(arr[i]['id_jenis_pelayanan'] == 8){
+                console.log("DRUM");
+              }else{
+                console.log("Oops!");
+              }
+            }
+          }
         });
+      });
     </script>
 
   </body>

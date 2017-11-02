@@ -77,87 +77,42 @@
         <div class="top_nav">
           <div class="nav_menu">
             <nav class="" role="navigation">
-              <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-              </div>
-
               <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">John Doe
+                <li>
+                  <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="images/img.jpg" alt="">
+                    <?php $var = $this->session->userdata('loggedIn'); 
+                          echo $var['username']." ";
+                    ?>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
                     <li>
-                      <a href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
-                      </a>
+                      <a href=""> Profile</a>
                     </li>
-                    <li><a href="javascript:;">Help</a></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li>
+                      <a href="<?php echo base_url('Login/logout');?>">
+                        <i class="fa fa-sign-out pull-right">
+                      </i> Log Out</a>
+                    </li>
                   </ul>
                 </li>
-
-                <li role="presentation" class="dropdown">
-                  <a href="#" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                <!-- NOTIF GOES HERE -->
+                <li id="li_notif" role="presentation" class="dropdown">
+                  <a id="click_me_please" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green" id="new_count_message">
-                      <?php $DB1 = $this->load->database('testdb', TRUE);
-                            echo $DB1->where('read_status',0)->count_all_results('notifikasi');?>
-                    </span>
+                    <span id="count_message" class="badge bg-green" >0</span>
                   </a>  
-                  <!-- notidf message looping -->
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+
+                  <ul class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
-                      <a>
-                        <span class="image"><img src="<?php echo base_url();?>assets/Admin/images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
+                        <!-- news feed goes here -->
+                       <ul id="news_feed">
+                         
+                       </ul>
                     </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
+              
+                    <!-- pagination page link down here -->
                     <li>
                       <div class="text-center">
                         <a>
@@ -166,6 +121,8 @@
                         </a>
                       </div>
                     </li>
+                    <!-- pagination page link down here -->
+
                   </ul>
                 </li>
               </ul>
@@ -380,7 +337,41 @@
     <!-- <script src="<?php echo base_url();?>assets/admin/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script> -->
     <!-- starrr -->
     <script src="<?php echo base_url();?>assets/admin/starrr/dist/starrr.js"></script>
-    <script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
+    <!-- <script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script> -->
+    <script>
+      $(document).ready(function(){
+       
+       function load_unseen_notification(view = '')
+       {
+        $.ajax({
+         url:"<?php echo base_url('admin/news_feed');?>",
+         method:"POST",
+         data:{view:view},
+         dataType:"json",
+         success:function(data)
+         {
+          $(' #news_feed').html(data.notification);
+          if(data.unseen_notification > 0)
+          {
+           $('#li_notif .dropdown-toggle #count_message').html(data.unseen_notification);
+          }
+         }
+        });
+       }
+       
+       load_unseen_notification();
+       
+       $(document).on('click', '#click_me_please', function(){
+        $('#count_message').html('0');
+        load_unseen_notification('yes');
+       });
+       
+       setInterval(function(){ 
+        load_unseen_notification(); 
+       }, 5000);
+       return false;
+      });
+    </script>
     <script>
     $(document).ready(function(){
       $('.checkbox').iCheck({
@@ -478,11 +469,11 @@
       });
       // return false;
     });
-    var socket = io.connect( 'http://'+window.location.hostname+':3000' );
-    socket.on("new_notif", function( data ) {
-      $( "#new_count_message" ).html( data.count_notif );
+    // var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+    // socket.on("new_notif", function( data ) {
+    //   $( "#new_count_message" ).html( data.count_notif );
 
-    });
+    // });
     </script>
     <script>
       // event_time_start_alt
