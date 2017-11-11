@@ -225,7 +225,8 @@
                         // echo $key->id_event."<br>";
                         $this->session->set_userdata('id_event_throw', $key->id_event);
                         echo "this is session id: ".$this->session->userdata('id_event_throw');
-                    ?>  
+                    ?>
+                    <input type="hidden" id="event_id_add" value="<?php echo $key->id_event;?>">
                     </p>
                   </label> 
                   <?php

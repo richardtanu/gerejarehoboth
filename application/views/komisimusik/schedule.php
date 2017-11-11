@@ -187,14 +187,15 @@
                       if ($key->submitted_volunter > 0) { ?>
                       <!--  -->
                             <form method='post' action="<?php echo base_url('komisimusik/edit_volunter_from_schedule');?>">
-                              <input type="hidden" class="hidden" name="event_id_hidden" value="<?php echo $key->id_event;?>">
-                              <input type='submit' class='btn btn-default' value='Edit' onclick='sentParameterByPhp(<?php echo $key->id_event;?>)' />
+                              <input type="hidden" class="hidden" name="event_id_edit" value="<?php echo $key->id_event;?>">
+                              <input type='submit' class='btn btn-default' value='Edit'/>
+                              <!-- onclick='sentParameterToEdit(<?php echo $key->id_event;?>)'  -->
                             </form>
                             <button type="button" id="button_view_volunter" class='btn btn-default' onclick="showModalView(<?php echo $key->id_event;?>)" >View</button>
                       <?php } else { ?>
                             <form method='post' action=" <?php echo base_url('komisimusik/add_volunter_to_schedule');?>  ">
-                              <input type="hidden" class="hidden" name="event_id_hidden" value="<?php echo $key->id_event;?>">
-                              <input type='submit' class='btn btn-default' value='Add Volunter'/>
+                              <input type="hidden" class="hidden" name="event_id_add" value="<?php echo $key->id_event;?>">
+                              <input type='submit' class='btn btn-default' value='Add Volunter'/><!-- onclick='sentParameterToAdd(<?php echo $key->id_event;?>) -->
                             </form>
                             <button type="button" id="button_view_volunter" class='btn btn-default' onclick="showModalView(<?php echo $key->id_event;?>)" >View</button>
                       <?php } ?>
@@ -371,7 +372,7 @@
           // $('#button_view_volunter').click( function() {
 
             // $('#view_submited_volunter').modal('show');
-            // alert(eventid);
+            alert(eventid);
             $.ajax({
               type: "POST",
               url: "<?php echo base_url('komisimusik/view_volunter_from_schedule');?>",
@@ -428,24 +429,42 @@
           // });
         }
         
-        function sentParameterByPhp(parameter){
-          var eventid = parameter;
-          alert(eventid);
-          $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('komisimusik/edit_volunter_from_schedule');?>",
-            dataType: "json",
-            data: {'event_id_throw_edit' : eventid},
-            success: function(result){
-              alert(result);
-            },
-            error: function(xhr, status, error) {
-                console.log("error:" + error);
-            }
+        // function sentParameterToEdit(parameter){
+        //   var eventid = parameter;
+        //   // alert(eventid);
+        //   $.ajax({
+        //     type: "POST",
+        //     url: "<?php echo base_url('komisimusik/edit_volunter_from_schedule');?>",
+        //     dataType: "json",
+        //     data: {'event_id_thrown_edit' : eventid},
+        //     success: function(result){
+        //       alert(result);
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.log("error:" + error);
+        //     }
 
-          });
-          return false;
-        }
+        //   });
+        //   return false;
+        // }
+        // function sentParameterToAdd(parameter){
+        //   var eventid = parameter;
+        //   // alert(eventid);
+        //   $.ajax({
+        //     type: "POST",
+        //     url: "<?php echo base_url('komisimusik/add_volunter_to_schedule');?>",
+        //     dataType: "json",
+        //     data: {'event_id_thrown_add' : eventid},
+        //     success: function(result){
+        //       alert(result);
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.log("error:" + error);
+        //     }
+
+        //   });
+        //   return false;
+        // }
       // });
     </script>
   </body>

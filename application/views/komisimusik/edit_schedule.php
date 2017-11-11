@@ -183,7 +183,9 @@
 
             <div class="row">
                <div class="col-md-12">
-                <?php foreach ($get_event_info_by_id as $key) { ?>
+                <?php 
+                  if($get_event_info_by_id != null){
+                  foreach ($get_event_info_by_id as $key) { ?>
                   <h3>Event Info <i class="fa fa-info-circle" aria-hidden="true"></i></h3>
                   <p>This event held on <i class="fa fa-calendar" aria-hidden="true"></i>
                     <?php $date = $key->start_at; echo substr($date, 0, 10);?></p>
@@ -226,11 +228,12 @@
                         $this->session->set_userdata('id_event_throw', $key->id_event);
                         echo "this is session id: ".$this->session->userdata('id_event_throw');
                     ?> 
-                    <input type="hidden" id="hidden_id_edit_page" value="<?php echo $key->id_event;?>">
+                    <input type="hidden" id="event_id_edit" value="<?php echo $key->id_event;?>">
                     </p>
                   </label> 
                   <?php
-                }?>
+                }
+              } ?>
                 
               <!-- </div> --> 
               <div class="col-md-12">
@@ -242,23 +245,28 @@
                     // echo "<script>alert('not error!');</script>";
                 ?>
                 <div class="form_error">
-                  <?php echo validation_errors(); ?>
+                  <!-- <?php echo validation_errors(); ?> -->
                 </div>
                  
                 <!-- <?php echo form_open(); ?> "-->
-                <form class="form"  action="<?php echo base_url('komisimusik/volunter_submit');?>" method="POST">
+                <form class="form error"  action="<?php echo base_url('komisimusik/volunteer_edit');?>" method="POST">
 
                   <div class="container-fluid form">
                     <div class="panel panel-default">
                       <div class="panel-heading">
                         Worship Leader
+                        <!-- <div class> -->
+                          <!-- <br> -->
+                          <!-- <div class="p-3 mb-2 bg-info text-white">Last added worship leader: kriswanto</div> -->
+                          <!-- <p class="text-success">Last added worship leader: kriswanto</p> -->
+                        <!-- </div> -->
                       </div>
-                      <div class="well">
-                        
-                      </div>
+                      
                       <div class="panel-body">
+                        <p id="lastWlAdded" class="text-success"></p>
                         <div class="input-group control-group">
                           <div id="taginputwl">
+                             <?php echo form_error('taginputwl'); ?>
                             <input id='inputwl' type="text" class="typeahead form-control" name="taginputwl" placeholder="Worship Leader" autocomplete="off" value="">
                             <input id='inputwlid' type="hidden">
                           </div>
@@ -274,8 +282,10 @@
                         Singers
                       </div>
                       <div class="panel-body">
+                        <p id="lastSingersAdded" class="text-success"></p>
                         <div class="input-group control-group">
                           <div id="taginputsingers">
+                            <?php echo form_error('taginputsingers'); ?>
                             <input type="text" class="typeahead form-control" name="taginputsingers" placeholder="Singers" autocomplete="off">
                           </div>
                         </div>
@@ -291,8 +301,10 @@
                         <label>Keyboard</label>
                       </div>
                       <div class="panel-body">
+                        <p id="lastKeyboardAdded" class="text-success"></p>
                         <div class="input-group control-group">
                           <div id="taginputkeyboard">
+                            <?php echo form_error('taginputkeyboard'); ?>
                             <input type="text" class="typeahead form-control" name="taginputkeyboard" placeholder="Keyboard" autocomplete="off">
                           </div>
                         </div>
@@ -305,8 +317,10 @@
                           <label>Guitar</label>
                         </div>
                         <div class="panel-body">
+                          <p id="lastGuitarAdded" class="text-success"></p>
                           <div class="input-group control-group">
                             <div id="taginputguitar">
+                               <?php echo form_error('taginputguitar'); ?>
                               <input type="text" class="typeahead form-control" name="taginputguitar" placeholder="Guitar" autocomplete="off">
                             </div>
                           </div>
@@ -319,8 +333,10 @@
                           <label>Bass</label>
                         </div>
                         <div class="panel-body">
+                          <p id="lastBassAdded" class="text-success"></p>
                           <div class="input-group control-group">
                             <div id="taginputbass">
+                              <?php echo form_error('taginputbass'); ?>
                               <input type="text" class="typeahead form-control" name="taginputbass" placeholder="Bass" autocomplete="off">
                             </div>
                           </div>
@@ -332,9 +348,11 @@
                         <div class="panel-heading">
                           <label>Drum</label>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body ">
+                          <p id="lastDrumAdded" class="text-success"></p>
                           <div class="input-group control-group">
                             <div id="taginputdrum">
+                              <?php echo form_error('taginputdrum'); ?>
                               <input type="text" class="typeahead form-control" name="taginputdrum" placeholder="Drum" autocomplete="off">
                             </div>
                           </div>
@@ -342,7 +360,7 @@
                       </div>
                    </div>
                   <div class="panel-body">
-                    <input class="btn btn-success btn-sm" type="submit" name="submitButton" value="Submit" id="submitButton" />
+                    <input class="btn btn-success btn-sm" type="submit" name="submitButton" value="Confirm Change" id="submitButton" />
                   </div>
                 </form>
 
@@ -890,7 +908,7 @@
       $(document).ready(function(){
         var tampung;
         var result_into_arr = [];
-        var id_hidden = $('#hidden_id_edit_page').val();
+        var id_hidden = $('#event_id_edit').val();
         alert("id: "+id_hidden);
         $.ajax({
           url: "<?php echo base_url('komisimusik/fetched_volunter_added_to_event_by_id');?>",
@@ -905,18 +923,33 @@
             // for (var i = 0; i < arr.length; i++) {
             //   result_into_arr[i] = arr[i];
             // }
+            var sings = '';
             for (var i = 0; i < arr.length; i++) {
               if(arr[i]['id_jenis_pelayanan'] == 2){
+                $('#lastWlAdded').text('Last Worship Leader added: '+arr[i]['nama']);
+                $('#inputwl').tagsinput('add', arr[i]['nama']);
                 console.log("WL");
               }else if(arr[i]['id_jenis_pelayanan'] == 3){
+                
+                  sings += arr[i]['nama'] + ",";
+                $('#lastSingersAdded').text('Last Singers added: '+ sings);
+                $('#taginputsingers .typeahead').tagsinput('add', arr[i]['nama']);
                 console.log("SINGERS");
               }else if(arr[i]['id_jenis_pelayanan'] == 5){
+                $('#lastKeyboardAdded').text('Last Keyboard player added: '+arr[i]['nama']);
+                $('#taginputkeyboard .typeahead').tagsinput('add', arr[i]['nama']);
                 console.log("KEYBOARD");
               }else if(arr[i]['id_jenis_pelayanan'] == 6){
+                $('#lastGuitarAdded').text('Last Guitar player added: '+arr[i]['nama']);
+                $('#taginputguitar .typeahead').tagsinput('add', arr[i]['nama']);
                 console.log("GUITAR");
               }else if(arr[i]['id_jenis_pelayanan'] == 7){
+                $('#lastBassAdded').text('Last Bass player added: '+arr[i]['nama']);
+                $('#taginputbass .typeahead').tagsinput('add', arr[i]['nama']);
                 console.log("BASS");
               }else if(arr[i]['id_jenis_pelayanan'] == 8){
+                $('#lastDrumAdded').text('Last Drum player added: '+arr[i]['nama']);
+                $('#taginputdrum .typeahead').tagsinput('add', arr[i]['nama']);
                 console.log("DRUM");
               }else{
                 console.log("Oops!");

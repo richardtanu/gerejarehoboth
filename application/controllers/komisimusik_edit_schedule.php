@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class komisipastoral extends CI_Controller {
+class komisimusik_edit_schedule extends CI_Controller {
 
 	// public $event_id = 0;
 	public function __construct() {
@@ -9,20 +9,19 @@ class komisipastoral extends CI_Controller {
 		$this->load->model('NotifModel','NM');
 		$this->load->model('EventModel','EM');
 		$this->load->helper('file');
+		$event_id = 0;
 	}
 
 	public function index()
 	{
-		// $data['result'] = $this->NM->active_record_get_notif();
-		$this->load->view('komisipastoral/index.php');
+		$this->load->view('komisimusik/edit_schedule.php', $data);
 	}
-
 	public function schedule(){
 		// $this->session->set_userdata('eventIdSend', $);
 
 		$get_events = $this->EM->get_event();
 		$data['get_events'] = $get_events;
-		$this->load->view('komisipastoral/schedule.php', $data);
+		$this->load->view('komisimusik/schedule.php', $data);
 	}
 
 	public function add_volunter_to_schedule($somevalue = null){
@@ -188,10 +187,15 @@ class komisipastoral extends CI_Controller {
 		$test = $this->session->userdata('error');
 	}
 
-	public function volunteer_edit(){
+	public function volunteer_edit($id){
+		if($id){
+			$event_id_session = $id;
+		}else{
+			$event_id_session = $this->session->userdata('_eventId');
+		}
 		// $event_id_edit = $this->input->POST('event_id_edit');
 		// $this->session->set_userdata('_eventId', $event_id_edit);
-		$event_id_session = $this->session->userdata('_eventId');
+		
 		// echo $event_id_session;
 		$this->form_validation->set_rules('taginputwl', 'Need to be filled', 'required|callback_check_availability['.$event_id_session.']');
 		$this->form_validation->set_rules('taginputsingers', '', 'callback_check_availability['.$event_id_session.']');
@@ -201,7 +205,7 @@ class komisipastoral extends CI_Controller {
 		$this->form_validation->set_rules('taginputdrum', 'Need to be filled', 'required|callback_check_availability['.$event_id_session.']');
 		
 
-		$event_id = $this->session->userdata('this_session_from_edit_function_in_controller');
+		$event_id = $this->session->userdata('_eventId');
         if ($this->form_validation->run() == FALSE)
         {
         	// $error = $this->validation_errors->error_array();
@@ -226,7 +230,7 @@ class komisipastoral extends CI_Controller {
 
 			// detail wl
             $wlreplace = explode(",",str_replace("+"," ",$worship_leader));
-            $sizewl =  sizeof($wlreplace);
+            $sizewl =  count($wlreplace);
             for ($i=0; $i < $sizewl; $i++) { 
 	            $wlresult = $this->NM->get_detail_by_nama($wlreplace[$i], 2);
 
@@ -249,7 +253,7 @@ class komisipastoral extends CI_Controller {
             // detail singers
             if(!empty($singers)){
             	$singerreplace = explode(",",str_replace("+"," ",$singers));
-            	$sizesingers =  sizeof($singerreplace);
+            	$sizesingers =  count($singerreplace);
             
             	for ($i=0; $i < $sizesingers; $i++) { 
 	            	$singerresult = $this->NM->get_detail_by_nama($singerreplace[$i], 3);
@@ -268,7 +272,7 @@ class komisipastoral extends CI_Controller {
             }  
             // detail keyboard
             $keyboardreplace = explode(",",str_replace("+"," ",$keyboard));
-            $sizekeyboard =  sizeof($keyboardreplace);
+            $sizekeyboard =  count($keyboardreplace);
             for ($i=0; $i < $sizekeyboard; $i++) { 
             	$keyboardresult = $this->NM->get_detail_by_nama($keyboardreplace[$i], 5);
             	$id_pelayan_key; $id_jenis_pelayanan_key;
@@ -286,7 +290,7 @@ class komisipastoral extends CI_Controller {
 
             // detail guitar
             $guitarreplace = explode(",",str_replace("+"," ",$guitar));
-            $sizeguitar =  sizeof($guitarreplace);     
+            $sizeguitar =  count($guitarreplace);     
             for ($i=0; $i < $sizeguitar; $i++) { 
             	$guitarresult = $this->NM->get_detail_by_nama($guitarreplace[$i], 6);
             	$id_pelayan_guitar; $id_jenis_pelayanan_guitar;
@@ -304,7 +308,7 @@ class komisipastoral extends CI_Controller {
 
             // detail bass
             $bassreplace = explode(",",str_replace("+"," ",$bass));
-            $sizebass =  sizeof($bassreplace);
+            $sizebass =  count($bassreplace);
             
             for ($i=0; $i < $sizebass; $i++) { 
             	$bassresult = $this->NM->get_detail_by_nama($bassreplace[$i], 7);
@@ -323,7 +327,7 @@ class komisipastoral extends CI_Controller {
 
             // detail drum
             $drumreplace = explode(",",str_replace("+"," ",$drum));
-            $sizedrum =  sizeof($drumreplace);
+            $sizedrum =  count($drumreplace);
  			for ($i=0; $i < $sizedrum; $i++) { 
             	$drumresult = $this->NM->get_detail_by_nama($drumreplace[$i], 8);
             	$id_pelayan_drum; $id_jenis_pelayanan_drum;
@@ -338,7 +342,9 @@ class komisipastoral extends CI_Controller {
             	$superDetail[$globalIndex] = $detailDrum;
             	$globalIndex++;
             }
-            // $this->NM->insert_whole_music_volunter_into_event($superDetail);
+            echo "<script>alert(".$event_id_session.");</script>";
+            $this->EM->delete_event($event_id_session);
+            $this->NM->insert_whole_music_volunter_into_event($superDetail);
             // $this->session->unset_userdata();
             $data['success'] = "success";
             $this->load->view('komisimusik/schedule.php',$data);
@@ -348,7 +354,8 @@ class komisipastoral extends CI_Controller {
 	}
 
 	
-	public function edit_volunter_from_schedule($parameter = null){
+
+	public function edit_volunter_from_schedule($parameter = null, $id){
 		
 		// $event_id_thrown = $this->input->POST('event_id_thrown_edit');
 		// echo "<script>alert(".$event_id_thrown.");</script>";
@@ -487,6 +494,77 @@ class komisipastoral extends CI_Controller {
 		);
 		echo json_encode($data);
 	}
+
+	public function get_worship_leader(){
+		$result = $this->NM->get_wl();
+
+		$arr =  array();
+
+		for ($i=0; $i < sizeof($result); $i++) { 
+			$arr[] = $result[$i];
+		}
+		echo json_encode($result);
+	}
+	
+	public function get_singers(){
+		
+		$result = $this->NM->get_singers();
+		$arr =  array();
+		for ($i=0; $i < sizeof($result); $i++) { 
+			$arr[] = $result[$i];
+		}
+		echo json_encode($result);
+	}
+
+	public function get_keyboard_player(){
+		
+		$result = $this->NM->get_keyboard_player();
+
+		$arr =  array();
+		for ($i=0; $i < sizeof($result); $i++) { 
+			$arr[] = $result[$i];
+		}
+		echo json_encode($result);
+	}
+
+	public function get_guitar_player(){
+		
+		$result = $this->NM->get_guitar_player();
+
+		$arr =  array();
+		for ($i=0; $i < sizeof($result); $i++) { 
+			$arr[] = $result[$i];
+		}
+		echo json_encode($result);
+	}
+
+	public function get_bass_player(){
+		
+		$result = $this->NM->get_bass_player();
+
+		$arr =  array();
+		for ($i=0; $i < sizeof($result); $i++) { 
+			$arr[] = $result[$i];
+		}
+		echo json_encode($result);
+	}
+
+	public function get_drum_player(){
+		
+		$result = $this->NM->get_drum_player();
+
+		$arr =  array();
+		for ($i=0; $i < sizeof($result); $i++) { 
+			$arr[] = $result[$i];
+		}
+		echo json_encode($result);
+	}
+	
+
+	
+	// get from add_volunter_to_schedule page
+	
+
 }
 
 

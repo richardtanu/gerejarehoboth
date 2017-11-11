@@ -77,7 +77,7 @@
 
             <!-- sidebar menu -->
             <?php
-              require_once ('application/views/komisimusik/SidebarKomisiMusik.php');
+              require_once ('application/views/komisimusik/SidebarKomisiPastoral.php');
             ?>
             <!-- /sidebar menu -->
 
